@@ -1,18 +1,10 @@
 module.exports = (app) => {
 
-	app.get('/', async function(req, res) {
-		console.debug("Hit the homepage");
-		res.json({
-			"status":200,
-			"message":"API service is online"
-		})
-	})
+	app.get('/api/dashboard/teacher', async function(req, res) {
+        // need to return data based on teacher email ID here. based on how token is going to be sent back to me
+        console.debug("Hit the teacher dashboard page");
+        res.status(200).json({
 
-	app.get('/error', async function(req, res) {
-		console.error("Hit the internal error page")
-		res.json({
-			"status":500,
-			"message":"internal-error"
-		})
+        })
 	})
 }
