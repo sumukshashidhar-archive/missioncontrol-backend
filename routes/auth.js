@@ -49,6 +49,7 @@ module.exports = (app) => {
           req.body.role
         );
         if (response) {
+          //meaning the admin user creation succeeded, now we need to look to creating the actual admin user as well.
           res.json({
             message: "Successfully Created the User",
           });
@@ -70,6 +71,8 @@ module.exports = (app) => {
           req.body.role
         );
         if (response) {
+          // teacher USER is created, now we create the actual teacher account!
+          
           res.json({
             message: "Successfully Created the User",
           });
