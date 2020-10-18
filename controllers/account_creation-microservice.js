@@ -19,7 +19,7 @@ module.exports = {
           reject(err);
         } else {
           console.debug(obj);
-          resolve(obj);
+          resolve(true);
         }
       });
     });
@@ -41,7 +41,7 @@ module.exports = {
           reject(err);
         } else {
           console.debug(obj);
-          resolve(obj);
+          resolve(true);
         }
       });
     });

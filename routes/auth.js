@@ -2,7 +2,7 @@ const password_module = require("../controllers/auth-microservice");
 const registration = require("./../controllers/registration-service");
 const user = require("./../models/user");
 const tokenms = require("./../controllers/jwt-microservice");
-
+const accCreate = require('./../controllers/account_creation-microservice')
 const ADMIN_CREATION_SECRET = "SECRET";
 
 module.exports = (app) => {
@@ -72,10 +72,19 @@ module.exports = (app) => {
         );
         if (response) {
           // teacher USER is created, now we create the actual teacher account!
-          
-          res.json({
-            message: "Successfully Created the User",
-          });
+          var responseAccCreate = accCreate.makeTeacherAccount(req.body.username, req.body.name, req.body.class_handled, req.body.section)
+          if (responseAccCreate) {
+            // this means everything went well
+            res.json({
+              message: "Successfully Created the User",
+            });
+          }
+          else {
+            res.json({
+              message: "Something went horribly wrong",
+            });
+          }
+
           console.info("Created the user");
         } else {
           res.status(409).json({
@@ -90,9 +99,17 @@ module.exports = (app) => {
           req.body.role
         );
         if (response) {
-          res.json({
-            message: "Successfully Created the User",
-          });
+          var responseAccCreate = accCreate.makeStudentAccount(req.body.username, req.body.name, req.body.classattend, req.body.section)
+          if(responseAccCreate) {
+            res.json({
+              message: "Successfully Created the User",
+            });
+          }
+          else{
+            res.json({
+              message: "Something went horribly wrong",
+            });
+          }
           console.info("Created the user");
         } else {
           res.status(409).json({
