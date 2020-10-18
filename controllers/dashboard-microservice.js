@@ -10,7 +10,7 @@ module.exports = {
             teacher.findOne({emailID: email}, (err, obj) => {
                 if(err) {
                     console.error(err)
-                    reject(err)
+                    resolve(false);
                 }
                 else {
                     if(obj) {
@@ -31,7 +31,7 @@ module.exports = {
             student.findOne({emailID: email}, (err, obj) => {
                 if(err) {
                     console.error(err)
-                    reject(err)
+                    resolve(false);
                 }
                 else {
                     if(obj) {
@@ -52,7 +52,7 @@ module.exports = {
             admin.findOne({emailID: email}, (err, obj) => {
                 if(err) {
                     console.error(err)
-                    reject(err)
+                    resolve(false);
                 }
                 else {
                     if(obj) {
