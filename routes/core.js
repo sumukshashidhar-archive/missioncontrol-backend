@@ -19,11 +19,4 @@ module.exports = (app) => {
 			"message":"internal-error"
 		})
 	})
-	
-	app.get('/key', async function(req, res) {
-		console.debug("Key Request")
-		res.status(200).json({
-			"key":publicKEY
-		})
-	})
 }
