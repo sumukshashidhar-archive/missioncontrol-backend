@@ -1,4 +1,4 @@
-var password_module = require("../controllers/auth-microservice")
+const password_module = require("../controllers/auth-microservice")
 const registration = require("./../controllers/registration-service")
 const user = require("./../models/user")
 const tokenms = require("./../controllers/jwt-microservice")
@@ -56,7 +56,22 @@ module.exports = (app) => {
                 })
             }
         }
-        else if((req.body.creation_password === process.env.ADMIN_CREATION_SECRET||req.body.creation_password === process.env.DEVICE_CREATION_SECRET) && req.body.role==='device') {
+        else if((req.body.creation_password === process.env.ADMIN_CREATION_SECRET||req.body.creation_password === process.env.DEVICE_CREATION_SECRET) && req.body.role==='teacher') {
+            // this is for registration of regular users
+            const response = await registration.makeUser(req.body.username, req.body.password, req.body.role);
+            if(response){
+                res.json({
+                    "message":"Successfully Created the User"
+                })
+                console.info("Created the user")
+            }
+            else{ 
+                res.status(409).json({
+                    "message":"Did not create the user as the user already exists."
+                })
+            }
+        }
+        else if(req.body.role==='student') {
             // this is for registration of regular users
             const response = await registration.makeUser(req.body.username, req.body.password, req.body.role);
             if(response){
