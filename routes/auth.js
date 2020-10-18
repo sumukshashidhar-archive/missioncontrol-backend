@@ -3,7 +3,7 @@ const registration = require("./../controllers/registration-service")
 const user = require("./../models/user")
 const tokenms = require("./../controllers/jwt-microservice")
 
-const ADMIN_CREATION_SECRET = 
+const ADMIN_CREATION_SECRET = "SECRET"
 
 module.exports = (app) => {
 
