@@ -1,10 +1,15 @@
+const dashboardMicroservice = require("../controllers/dashboard-microservice");
+
+const service = require('./../controllers/dashboard-microservice')
 module.exports = (app) => {
 
 	app.get('/api/dashboard/teacher', async function(req, res) {
-        // need to return data based on teacher email ID here. based on how token is going to be sent back to me
-        console.debug("Hit the teacher dashboard page");
-        res.status(200).json({
-
-        })
+                // from the token, we need to get the email, do not know how the token will be sent back, so hard to predict
+                // will just be assuming var now
+		console.debug("Hit the teacher dashboard");
+		res.json({
+			"status":200,
+			"message":"API service is online"
+		})
 	})
 }
