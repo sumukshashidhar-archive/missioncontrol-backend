@@ -54,10 +54,10 @@ module.exports = {
   total_verification: (headerfile) => {
     return new Promise(async (resolve, reject) => {
       // first, we will send the authorization token to the extraction function
-      const extracted_token = await extract(headerfile)
+      const extracted_token = await this.extract(headerfile)
       if(extracted_token!==false) {
         // then we send it to the verification option
-        const decodedToken = await verification(extracted_token);
+        const decodedToken = await this.verification(extracted_token);
         if(decodedToken!==false) {
           resolve(decodedToken)
         }
