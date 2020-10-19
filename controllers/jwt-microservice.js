@@ -81,7 +81,8 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       const stringer = headerfile
       if(stringer.startsWith("Bearer ")) {
-        var token = str.substring(8, str.length)
+        console.log(stringer)
+        var token = stringer.substring(8)
         console.debug("token: ", token)
         resolve(token)
       }
