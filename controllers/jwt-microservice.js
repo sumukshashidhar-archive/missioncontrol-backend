@@ -13,26 +13,26 @@ const privateKEY = fs.readFileSync(privateKeyPath, "utf-8");
 const jENV = require("./../config/tokenOptions");
 
 module.exports = {
-  verification: async function (token) {
-    return new Promise(async (resolve, reject) => {
-      jwt.verify(token, publicKEY, jENV.verifyOptions, function (
-        err,
-        decodedToken
-      ) {
-        if (err) {
-          resolve(false);
-        } else {
-          resolve(decodedToken);
-        }
-      });
-    });
-  },
+	verification: async function (token) {
+		return new Promise(async (resolve, reject) => {
+			jwt.verify(token, publicKEY, jENV.verifyOptions, function (
+				err,
+				decodedToken
+			) {
+				if (err) {
+					resolve(false);
+				} else {
+					resolve(decodedToken);
+				}
+			});
+		});
+	},
 
-  signing: function (username, role) {
-    return jwt.sign(
-      { username: username, role: role },
-      privateKEY,
-      jENV.signOptions
-    );
-  },
+	signing: function (username, role) {
+		return jwt.sign(
+			{ username: username, role: role },
+			privateKEY,
+			jENV.signOptions
+		);
+	},
 };
