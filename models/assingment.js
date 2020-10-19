@@ -5,8 +5,12 @@ var assignmentSchema = new mongoose.Schema({
   section: String,
   teacher_assigned_by: String,
   dueDate: Number,
+  assignemtName: String,
+  assignmentLink: String,
   extensionPurchasedBy: Array,
   newDueDate: Array,
+  submittedStudents: Array,
+  submittedStudentsLink: Array,
 });
 
 module.exports = mongoose.model("assignment", assignmentSchema);
