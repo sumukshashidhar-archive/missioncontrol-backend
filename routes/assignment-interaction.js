@@ -46,7 +46,23 @@ module.exports = (app) => {
       req.headers.authorization
     );
 
-    if (authenticated !== false) {
+    if (authenticated !== false && req.body.assignmentID !== null && req.body.assignmentID !== undefined && req.body.duration !== undefined && req.body.duration !== null) {
+      const resp = await asms.requestExtension(authenticated["username"], req.body.assignmentID, req.body.duration)
+      if(resp) {
+        res.status(200).json({
+          "message":"Purchased Extension"
+        })
+      }
+      else {
+        res.status(500).json({
+          "message":"Not Enough Points / Cannot Stack"
+        })
+      }
+    }
+    else{
+      res.staus(403).json({
+        "message":"No Auth"
+      })
     }
   });
 
