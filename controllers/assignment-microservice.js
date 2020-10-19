@@ -42,5 +42,19 @@ module.exports = {
             }
         })
       })
-  }
+  },
+
+  getAssignmentsTeacher: async (teacher_class, teacher_section) => {
+    return new Promise(async (resolve, reject) => {
+      assignment.find({class_assigned: teacher_class, section: teacher_section, open: true}, async(err, obj) => {
+          if(err) {
+              console.log(err)
+              resolve(false)
+          }
+          else {
+              resolve(obj)
+          }
+      })
+    })
+}
 };

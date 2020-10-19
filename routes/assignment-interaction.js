@@ -56,6 +56,17 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
+      const resp = await asms.getAssignmentsTeacher(authenticated["grade"], authenticated["section"])
+      if(resp !== false) {
+        res.status(200).json({
+          "object":resp
+        })
+      }
+      else {
+        res.status(500).json({
+          "message":"Something went wrong"
+        })
+      }
     }
   });
 
