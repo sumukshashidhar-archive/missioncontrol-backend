@@ -1,7 +1,7 @@
 module.exports = {
   issuer: "Kappathon Authentication Service",
   signOptions: {
-    issuer: "Sigmoid Authentication Service",
+    issuer: "Kappathon Authentication Service",
     expiresIn: "24h",
     algorithm: "RS512",
   },
