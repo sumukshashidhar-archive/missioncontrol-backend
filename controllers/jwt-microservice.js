@@ -12,6 +12,38 @@ const privateKEY = fs.readFileSync(privateKeyPath, "utf-8");
 // options
 const jENV = require("./../config/tokenOptions");
 
+
+
+async function extractor(headerfile){
+  return new Promise(async (resolve, reject) => {
+    const stringer = headerfile
+    if(stringer.startsWith("Bearer ")) {
+      var token = str.substring(8, str.length - 1)
+      console.debug("token: ", token)
+      resolve(token)
+    }
+    else {
+      resolve(false)
+    }
+  })
+}
+
+async function verifier(token) {
+  return new Promise(async (resolve, reject) => {
+    jwt.verify(token, publicKEY, jENV.verifyOptions, function (
+      err,
+      decodedToken
+    ) {
+      if (err) {
+        resolve(false);
+      } else {
+        resolve(decodedToken);
+      }
+    });
+  });
+}
+
+
 module.exports = {
   verification: async function (token) {
     return new Promise(async (resolve, reject) => {
@@ -54,10 +86,10 @@ module.exports = {
   total_verification: (headerfile) => {
     return new Promise(async (resolve, reject) => {
       // first, we will send the authorization token to the extraction function
-      const extracted_token = await this.extract(headerfile)
+      const extracted_token = await extractor(headerfile)
       if(extracted_token!==false) {
         // then we send it to the verification option
-        const decodedToken = await this.verification(extracted_token);
+        const decodedToken = await verifier(extracted_token);
         if(decodedToken!==false) {
           resolve(decodedToken)
         }
