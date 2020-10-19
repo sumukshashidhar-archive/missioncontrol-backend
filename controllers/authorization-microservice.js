@@ -1,6 +1,6 @@
 module.exports = {
 
-    authoriseTeacher: async (token) => {
+	authoriseTeacher: async (token) => {
 
-    }
+	}
 }
