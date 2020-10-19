@@ -41,7 +41,7 @@ module.exports = (app) => {
           });
         } else {
           res.status(500).json({
-            message: "Strange",
+            message: "Either the student does not exist, or something else went wrong",
           });
         }
       } else {
