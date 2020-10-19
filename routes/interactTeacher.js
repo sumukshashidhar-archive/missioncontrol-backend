@@ -1,5 +1,6 @@
 const auth = require("./../controllers/authorization-microservice");
 const getStudents = require("./../controllers/student_retrieve-microservice");
+const ptsService = require("./../controllers/points_control-microservice")
 module.exports = (app) => {
   app.get("/api/interaction/getStudents", async (req, res) => {
     // this route, if the teacher is authenticated, gets all the students for the particular class
@@ -23,4 +24,37 @@ module.exports = (app) => {
       });
     }
   });
+
+  app.post("/api/interaction/addPoints", async (req, res) => {
+    // this route is used to add points to students
+    const authenticated = auth.authoriseTeacher(token);
+    if (authenticated["status"] !== false) {
+      // it means that we are authenticated successfully
+      // we need to have the student's email id sent to us, to process this request, quite simply
+      if (req.body.student_id !== null && req.body.student_id !== "") {
+        // now that means we have the student id defined as well, and that we can just increase points
+        const response = await ptsService.addPoints(req.body.student_id);
+        if(response) {
+          res.status(200).json({
+            "message":"Successfully Incremented Points"
+          })
+        }
+        else {
+          res.status(500).json({
+            "message":"Strange"
+          })
+        }
+      }
+      else {
+        res.status(403).json({
+          "message":"No Student ID supplied"
+        })
+      }
+    }
+    else {
+      res.status(403).json({
+        "message":"Teacher is not authenticated"
+      })
+    }
+  })
 };
