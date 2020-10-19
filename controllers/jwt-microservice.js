@@ -19,7 +19,7 @@ async function extractor(headerfile){
     if(headerfile!==undefined){
       const stringer = headerfile
       if(stringer.startsWith("Bearer ")) {
-        var token = stringer.substring(8, stringer.length - 1)
+        var token = stringer.substring(8, stringer.length)
         console.debug("token: ", token)
         resolve(token)
       }
