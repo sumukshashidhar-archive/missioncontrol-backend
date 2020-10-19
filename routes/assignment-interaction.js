@@ -68,6 +68,11 @@ module.exports = (app) => {
         })
       }
     }
+    else {
+      res.status(403).json({
+        "message":"No Auth"
+      })
+    }
   });
 
   app.post("/api/assignments/teacher/makeAssignment", async (req, res) => {
