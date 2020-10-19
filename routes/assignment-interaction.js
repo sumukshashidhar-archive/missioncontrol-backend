@@ -66,8 +66,20 @@ module.exports = (app) => {
       );
 
       if(response) {
-        
+        res.status(200).json({
+          "message":"Successfully Created Assignment"
+        })
       }
+      else {
+        res.status(500).json({
+          "message":"failed to create assignment"
+        })
+      }
+    }
+    else {
+      res.status(403).json({
+        "message":"Either Auth Failed, or you failed to supply the required parameters"
+      })
     }
   });
 };
