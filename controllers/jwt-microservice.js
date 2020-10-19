@@ -41,6 +41,7 @@ async function verifier(token) {
       decodedToken
     ) {
       if (err) {
+        console.log(err)
         resolve(false);
       } else {
         console.log(decodedToken)
