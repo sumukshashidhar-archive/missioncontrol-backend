@@ -6,5 +6,4 @@ module.exports = (app) => {
   require("./routes/dashboards")(app);
   require("./routes/interactTeacher")(app);
   require("./routes/assignment-interaction")(app);
-
 };
