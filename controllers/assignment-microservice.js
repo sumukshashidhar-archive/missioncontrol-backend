@@ -69,7 +69,7 @@ module.exports = {
       // first check if they have the balance to do so
       student.findOne(
         { emailID: student_id },
-        { totalInteractionPoints: 1 },
+        { student_name: 1, totalInteractionPoints: 1},
         async (err, obj) => {
           if (err) {
             console.error(err);
@@ -95,12 +95,13 @@ module.exports = {
                       i < obj2["extensionPurchasedBy"].length;
                       i++
                     ) {
-                      if (obj2["extensionPurchasedBy"][i] == student_id) {
+                      if (obj2["extensionPurchasedBy"][i] === student_id) {
+                          console.log(obj2["extensionPurchasedBy"])
                         console.log("Found the student in purchase list");
                         resolve(false);
+                        return
                       }
                     }
-                      console.log("Did not find student in purchased");
                       // if it has reached this stage, it means that the student has the appropriate points,
                       // and also has not purchased the extension. so, now, let us first deduct from the student
                       var interactpoints = obj["totalInteractionPoints"];
@@ -124,7 +125,7 @@ module.exports = {
                             // now we add the name of the student to the lists as well, along with IDs
                             obj2["extensionPurchasedBy"].push(student_id);
                             obj2["extensionPurchasedByNames"].push(
-                              obj3["student_name"]
+                              obj["student_name"]
                             );
                             obj2["newDueDate"].push(newDue);
 
