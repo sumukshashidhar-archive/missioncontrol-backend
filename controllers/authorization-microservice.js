@@ -8,4 +8,13 @@ module.exports = {
       return false;
     }
   },
+
+  authoriseStudent: async (token) => {
+    const stud = await jwms.total_verification(token);
+    if (stud !== false && stud["role"] === "student") {
+      return stud;
+    } else {
+      return false;
+    }
+  },
 };
