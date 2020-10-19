@@ -75,23 +75,32 @@ module.exports = {
             console.error(err);
             resolve(false);
           } else {
+              console.log("Found Student: ", obj)
             if (
               (duration == 1 && obj["totalInteractionPoints"] >= 20) ||
               (duration == 2 && obj["totalInteractionPoints"] >= 50)
             ) {
+              console.log("Found Student");
               // then check the assignments list to make sure that their name isn't already in there
-              assignment.findById({ id: assingment_id }, async (err2, obj2) => {
-                if (err2) {
-                  console.error(err);
-                } else {
-                  for (
-                    let i = 0;
-                    i < obj2["extensionPurchasedBy"].length;
-                    i++
-                  ) {
-                    if (obj2["extensionPurchasedBy"] == student_id) {
-                      resolve(false);
-                    } else {
+              assignment.findById(
+                { _id: assingment_id },
+                async (err2, obj2) => {
+                  if (err2) {
+                    console.error(err);
+                  } else {
+                    console.log("Found Assignment");
+                    console.log(obj2);
+                    for (
+                      let i = 0;
+                      i < obj2["extensionPurchasedBy"].length;
+                      i++
+                    ) {
+                      if (obj2["extensionPurchasedBy"][i] == student_id) {
+                        console.log("Found the student in purchase list");
+                        resolve(false);
+                      }
+                    }
+                      console.log("Did not find student in purchased");
                       // if it has reached this stage, it means that the student has the appropriate points,
                       // and also has not purchased the extension. so, now, let us first deduct from the student
                       var interactpoints = obj["totalInteractionPoints"];
@@ -113,11 +122,11 @@ module.exports = {
                             resolve(false);
                           } else {
                             // now we add the name of the student to the lists as well, along with IDs
-                            obj2["extensionPurchasedBy"].append(student_id);
-                            obj2["extensionPurchasedByNames"].append(
+                            obj2["extensionPurchasedBy"].push(student_id);
+                            obj2["extensionPurchasedByNames"].push(
                               obj3["student_name"]
                             );
-                            obj2["newDueDate"].append(newDue);
+                            obj2["newDueDate"].push(newDue);
 
                             // finally, assignment updating
 
@@ -143,8 +152,7 @@ module.exports = {
                       );
                     }
                   }
-                }
-              });
+              );
             } else {
               resolve(false);
             }
