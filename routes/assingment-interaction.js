@@ -1,3 +1,4 @@
+const auth = require("./../controllers/authorization-microservice");
 module.exports = (app) => {
 
     /*
@@ -7,7 +8,6 @@ module.exports = (app) => {
     app.get('/api/assignments/student/getAssignemts', async(req, res) => {
 
     })
-
     /*
     Allows a student to submit a particular assignment
     */
@@ -15,8 +15,12 @@ module.exports = (app) => {
         
     })
 
-    app.get('/api/assignments/teacher/getAssignments', async(req, res) => {
+    app.post('/api/assignments/students/requestExtension', async(req, res) => {
         
+    })
+
+    app.get('/api/assignments/teacher/getAssignments', async(req, res) => {
+
     })
 
     app.post('/api/assignments/teacher/makeAssignmnt', async(req, res) => {
