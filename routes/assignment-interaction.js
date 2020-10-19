@@ -11,7 +11,22 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
-      
+      const resp = await asms.getAssignments(authenticated["grade"], authenticated["section"])
+      if(resp !== false) {
+        res.status(200).json({
+          "object":resp
+        })
+      }
+      else {
+        res.status(500).json({
+          "message":"Something went wrong"
+        })
+      }
+    }
+    else {
+      res.status(403).json({
+        "message":"No Auth"
+      })
     }
   });
   /*
@@ -56,7 +71,7 @@ module.exports = (app) => {
       req.body.assignmentLink !== null
     ) {
       //means we are authorized by this point, so
-      const response = asms.makeAssignment(
+      const response = await asms.makeAssignment(
         authenticated["grade"],
         authenticated["section"],
         authenticated["username"],
