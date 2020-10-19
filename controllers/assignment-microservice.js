@@ -29,4 +29,18 @@ module.exports = {
       });
     });
   },
+
+  getAssignments: async (student_class, student_section) => {
+      return new Promise(async (resolve, reject) => {
+        assignment.find({class_assigned: student_class, section: student_section, open: true}, async(err, obj) => {
+            if(err) {
+                console.log(err)
+                resolve(false)
+            }
+            else {
+                resolve(obj)
+            }
+        })
+      })
+  }
 };
