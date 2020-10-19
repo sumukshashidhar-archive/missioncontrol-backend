@@ -16,15 +16,21 @@ const jENV = require("./../config/tokenOptions");
 
 async function extractor(headerfile){
   return new Promise(async (resolve, reject) => {
-    const stringer = headerfile
-    if(stringer.startsWith("Bearer ")) {
-      var token = str.substring(8, str.length - 1)
-      console.debug("token: ", token)
-      resolve(token)
+    if(headerfile!==undefined){
+      const stringer = headerfile
+      if(stringer.startsWith("Bearer ")) {
+        var token = str.substring(8, str.length - 1)
+        console.debug("token: ", token)
+        resolve(token)
+      }
+      else {
+        resolve(false)
+      }
     }
     else {
       resolve(false)
     }
+
   })
 }
 
