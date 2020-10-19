@@ -6,12 +6,12 @@ module.exports = (app) => {
     // this route, if the teacher is authenticated, gets all the students for the particular class
     // first, we check if the teacher is authorized to access this route this way
     const authenticated = auth.authoriseTeacher(token);
-    if (authenticated["status"] === true) {
+    if (authenticated!==false) {
       // now this means that our user is authorized to access this function
       // let us get her the students of her class!
       const studs = await getStudents.getStudents(
-        authenticated["data"]["class_handled"],
-        authenticated["data"]["section"]
+        authenticated["grade"],
+        authenticated["section"]
       );
       if (studs !== false) {
         res.status(200).json({
