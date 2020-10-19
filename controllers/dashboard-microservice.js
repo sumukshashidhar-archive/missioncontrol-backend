@@ -1,6 +1,6 @@
 const student = require("./../models/student");
 const teacher = require("./../models/teacher");
-const admin = require("./../models/admin");
+
 module.exports = {
 	getTeacherDashboard: async function (email) {
 		return new Promise(async (resolve, reject) => {

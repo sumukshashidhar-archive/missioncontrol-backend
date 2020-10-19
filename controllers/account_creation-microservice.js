@@ -1,6 +1,5 @@
 const teacher = require("./../models/teacher");
 const student = require("./../models/student");
-const admin = require("./../models/admin");
 
 module.exports = {
 	makeTeacherAccount: async function (email, name, class_handled, section) {
