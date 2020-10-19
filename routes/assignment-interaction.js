@@ -5,7 +5,7 @@ module.exports = (app) => {
   Gets all the assignments due for the given student.
   */
 
-  app.get("/api/assignments/student/getAssignemts", async (req, res) => {
+  app.get("/api/assignments/student/getAssignments", async (req, res) => {
     const authenticated = await auth.authoriseStudent(
       req.headers.authorization
     );
