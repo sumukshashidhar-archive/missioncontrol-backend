@@ -11,22 +11,23 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
-      const resp = await asms.getAssignments(authenticated["grade"], authenticated["section"])
-      if(resp !== false) {
+      const resp = await asms.getAssignments(
+        authenticated["grade"],
+        authenticated["section"]
+      );
+      if (resp !== false) {
         res.status(200).json({
-          "object":resp
-        })
-      }
-      else {
+          object: resp,
+        });
+      } else {
         res.status(500).json({
-          "message":"Something went wrong"
-        })
+          message: "Something went wrong",
+        });
       }
-    }
-    else {
+    } else {
       res.status(403).json({
-        "message":"No Auth"
-      })
+        message: "No Auth",
+      });
     }
   });
   /*
@@ -46,23 +47,31 @@ module.exports = (app) => {
       req.headers.authorization
     );
 
-    if (authenticated !== false && req.body.assignmentID !== null && req.body.assignmentID !== undefined && req.body.duration !== undefined && req.body.duration !== null) {
-      const resp = await asms.requestExtension(authenticated["username"], req.body.assignmentID, req.body.duration)
-      if(resp) {
+    if (
+      authenticated !== false &&
+      req.body.assignmentID !== null &&
+      req.body.assignmentID !== undefined &&
+      req.body.duration !== undefined &&
+      req.body.duration !== null
+    ) {
+      const resp = await asms.requestExtension(
+        authenticated["username"],
+        req.body.assignmentID,
+        req.body.duration
+      );
+      if (resp) {
         res.status(200).json({
-          "message":"Purchased Extension"
-        })
-      }
-      else {
+          message: "Purchased Extension",
+        });
+      } else {
         res.status(500).json({
-          "message":"Not Enough Points / Cannot Stack"
-        })
+          message: "Not Enough Points / Cannot Stack",
+        });
       }
-    }
-    else{
+    } else {
       res.staus(403).json({
-        "message":"No Auth"
-      })
+        message: "No Auth",
+      });
     }
   });
 
@@ -72,22 +81,23 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
-      const resp = await asms.getAssignmentsTeacher(authenticated["grade"], authenticated["section"])
-      if(resp !== false) {
+      const resp = await asms.getAssignmentsTeacher(
+        authenticated["grade"],
+        authenticated["section"]
+      );
+      if (resp !== false) {
         res.status(200).json({
-          "object":resp
-        })
-      }
-      else {
+          object: resp,
+        });
+      } else {
         res.status(500).json({
-          "message":"Something went wrong"
-        })
+          message: "Something went wrong",
+        });
       }
-    }
-    else {
+    } else {
       res.status(403).json({
-        "message":"No Auth"
-      })
+        message: "No Auth",
+      });
     }
   });
 
@@ -113,21 +123,20 @@ module.exports = (app) => {
         req.body.assignmentLink
       );
 
-      if(response) {
+      if (response) {
         res.status(200).json({
-          "message":"Successfully Created Assignment"
-        })
-      }
-      else {
+          message: "Successfully Created Assignment",
+        });
+      } else {
         res.status(500).json({
-          "message":"failed to create assignment"
-        })
+          message: "failed to create assignment",
+        });
       }
-    }
-    else {
+    } else {
       res.status(403).json({
-        "message":"Either Auth Failed, or you failed to supply the required parameters"
-      })
+        message:
+          "Either Auth Failed, or you failed to supply the required parameters",
+      });
     }
   });
 };
