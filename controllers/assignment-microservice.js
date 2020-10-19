@@ -69,13 +69,13 @@ module.exports = {
       // first check if they have the balance to do so
       student.findOne(
         { emailID: student_id },
-        { student_name: 1, totalInteractionPoints: 1},
+        { student_name: 1, totalInteractionPoints: 1 },
         async (err, obj) => {
           if (err) {
             console.error(err);
             resolve(false);
           } else {
-              console.log("Found Student: ", obj)
+            console.log("Found Student: ", obj);
             if (
               (duration == 1 && obj["totalInteractionPoints"] >= 20) ||
               (duration == 2 && obj["totalInteractionPoints"] >= 50)
@@ -96,63 +96,63 @@ module.exports = {
                       i++
                     ) {
                       if (obj2["extensionPurchasedBy"][i] === student_id) {
-                          console.log(obj2["extensionPurchasedBy"])
+                        console.log(obj2["extensionPurchasedBy"]);
                         console.log("Found the student in purchase list");
                         resolve(false);
-                        return
+                        return;
                       }
                     }
-                      // if it has reached this stage, it means that the student has the appropriate points,
-                      // and also has not purchased the extension. so, now, let us first deduct from the student
-                      var interactpoints = obj["totalInteractionPoints"];
-                      var newDue = obj2["dueDate"];
-                      if (duration == 1) {
-                        interactpoints = interactpoints - 20;
-                        newDue = newDue + 24 * 3600;
-                      } else if (duration == 2) {
-                        interactpoints = interactpoints - 50;
-                        newDue = newDue + 2 * 24 * 3600;
-                      } else {
-                        resolve(false);
-                      }
-                      student.updateOne(
-                        { emailID: student_id },
-                        { totalInteractionPoints: interactpoints },
-                        async (err3, obj3) => {
-                          if (err3) {
-                            resolve(false);
-                          } else {
-                            // now we add the name of the student to the lists as well, along with IDs
-                            obj2["extensionPurchasedBy"].push(student_id);
-                            obj2["extensionPurchasedByNames"].push(
-                              obj["student_name"]
-                            );
-                            obj2["newDueDate"].push(newDue);
+                    // if it has reached this stage, it means that the student has the appropriate points,
+                    // and also has not purchased the extension. so, now, let us first deduct from the student
+                    var interactpoints = obj["totalInteractionPoints"];
+                    var newDue = obj2["dueDate"];
+                    if (duration == 1) {
+                      interactpoints = interactpoints - 20;
+                      newDue = newDue + 24 * 3600;
+                    } else if (duration == 2) {
+                      interactpoints = interactpoints - 50;
+                      newDue = newDue + 2 * 24 * 3600;
+                    } else {
+                      resolve(false);
+                    }
+                    student.updateOne(
+                      { emailID: student_id },
+                      { totalInteractionPoints: interactpoints },
+                      async (err3, obj3) => {
+                        if (err3) {
+                          resolve(false);
+                        } else {
+                          // now we add the name of the student to the lists as well, along with IDs
+                          obj2["extensionPurchasedBy"].push(student_id);
+                          obj2["extensionPurchasedByNames"].push(
+                            obj["student_name"]
+                          );
+                          obj2["newDueDate"].push(newDue);
 
-                            // finally, assignment updating
+                          // finally, assignment updating
 
-                            assingment.updateOne(
-                              { _id: assingment_id },
-                              {
-                                extensionPurchasedBy:
-                                  obj2["extensionPurchasedBy"],
-                                extensionPurchasedByNames:
-                                  obj2["extensionPurchasedByNames"],
-                                newDueDate: newDue,
-                              },
-                              async (err4, obj4) => {
-                                if (err4) {
-                                  resolve(false);
-                                } else {
-                                  resolve(true);
-                                }
+                          assingment.updateOne(
+                            { _id: assingment_id },
+                            {
+                              extensionPurchasedBy:
+                                obj2["extensionPurchasedBy"],
+                              extensionPurchasedByNames:
+                                obj2["extensionPurchasedByNames"],
+                              newDueDate: newDue,
+                            },
+                            async (err4, obj4) => {
+                              if (err4) {
+                                resolve(false);
+                              } else {
+                                resolve(true);
                               }
-                            );
-                          }
+                            }
+                          );
                         }
-                      );
-                    }
+                      }
+                    );
                   }
+                }
               );
             } else {
               resolve(false);
