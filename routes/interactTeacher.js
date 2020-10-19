@@ -5,8 +5,7 @@ module.exports = (app) => {
   app.get("/api/interaction/getStudents", async (req, res) => {
     // this route, if the teacher is authenticated, gets all the students for the particular class
     // first, we check if the teacher is authorized to access this route this way
-    const authenticated = auth.authoriseTeacher(req.headers.authorization);
-    console.log(authenticated)
+    const authenticated = await auth.authoriseTeacher(req.headers.authorization);
     if (authenticated!==false) {
       // now this means that our user is authorized to access this function
       // let us get her the students of her class!
