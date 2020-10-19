@@ -11,6 +11,7 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
+      
     }
   });
   /*
@@ -43,7 +44,7 @@ module.exports = (app) => {
     }
   });
 
-  app.post("/api/assignments/teacher/makeAssignmnt", async (req, res) => {
+  app.post("/api/assignments/teacher/makeAssignment", async (req, res) => {
     const authenticated = await auth.authoriseTeacher(
       req.headers.authorization
     );
