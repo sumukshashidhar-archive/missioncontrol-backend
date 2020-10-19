@@ -32,7 +32,7 @@ module.exports = {
 
   getAssignments: async (student_class, student_section) => {
       return new Promise(async (resolve, reject) => {
-        assignment.find({class_assigned: student_class, section: student_section, open: true}, {assignmentName: 1, assignmentLink: 1, dueDate: 1}, async(err, obj) => {
+        assignment.find({class_assigned: student_class, section: student_section, open: true}, {_id:0, assignmentName: 1, assignmentLink: 1, dueDate: 1}, async(err, obj) => {
             if(err) {
                 console.log(err)
                 resolve(false)

@@ -6,7 +6,7 @@ var assignmentSchema = new mongoose.Schema({
   teacher_assigned_by: String,
   teacher_name: String,
   dueDate: Number,
-  assignemtName: String,
+  assignmentName: String,
   assignmentLink: String,
   open: {type: Boolean, default: true},
   extensionPurchasedBy: { type: Array, default: [] },
