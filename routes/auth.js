@@ -1,7 +1,7 @@
 const password_module = require("../controllers/auth-microservice");
 const registration = require("./../controllers/registration-service");
 const user = require("./../models/user");
-const student = require("./../models/student")
+const student = require("./../models/student");
 const tokenms = require("./../controllers/jwt-microservice");
 const accCreate = require("./../controllers/account_creation-microservice");
 const teacher = require("../models/teacher");
@@ -17,37 +17,51 @@ module.exports = (app) => {
             req.body.password,
             obj["password"]
           );
-          console.log(resp)
+          console.log(resp);
           if (resp) {
             // at this stage, we have successfully authenticated the user
             // we need to now check if its a student or a teacher
-            if(obj["role"] === "student") {
-              student.findOne({emailID: req.body.username}, async (err2, obj2) => {
-                if(err2) {
-                  console.error(err2)
+            if (obj["role"] === "student") {
+              student.findOne(
+                { emailID: req.body.username },
+                async (err2, obj2) => {
+                  if (err2) {
+                    console.error(err2);
+                  } else {
+                    res.json({
+                      status: 200,
+                      token: tokenms.signing(
+                        obj["username"],
+                        obj["role"],
+                        obj2["student_name"],
+                        obj2["student_class"],
+                        obj2["student_section"]
+                      ),
+                    });
+                  }
                 }
-                else {
-                  res.json({
-                    status: 200,
-                    token: tokenms.signing(obj["username"], obj["role"], obj2["student_name"], obj2["student_class"], obj2["student_section"]),
-                  });
+              );
+            } else if (obj["role"] === "teacher") {
+              teacher.findOne(
+                { emailID: req.body.username },
+                async (err2, obj2) => {
+                  if (err2) {
+                    console.error(err2);
+                  } else {
+                    res.json({
+                      status: 200,
+                      token: tokenms.signing(
+                        obj["username"],
+                        obj["role"],
+                        obj2["teacher_name"],
+                        obj2["teacher_class"],
+                        obj2["teacher_section"]
+                      ),
+                    });
+                  }
                 }
-              })
+              );
             }
-            else if(obj["role"] === "teacher") {
-              teacher.findOne({emailID: req.body.username}, async (err2, obj2) => {
-                if(err2) {
-                  console.error(err2)
-                }
-                else {
-                  res.json({
-                    status: 200,
-                    token: tokenms.signing(obj["username"], obj["role"], obj2["teacher_name"], obj2["teacher_class"], obj2["teacher_section"]),
-                  });
-                }
-              })
-            }
-
           } else {
             res.json({
               status: 403,

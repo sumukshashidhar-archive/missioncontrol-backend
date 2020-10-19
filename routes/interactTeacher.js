@@ -5,9 +5,11 @@ module.exports = (app) => {
   app.get("/api/interaction/getStudents", async (req, res) => {
     // this route, if the teacher is authenticated, gets all the students for the particular class
     // first, we check if the teacher is authorized to access this route this way
-    const authenticated = await auth.authoriseTeacher(req.headers.authorization);
-    console.log(authenticated)
-    if (authenticated!==false) {
+    const authenticated = await auth.authoriseTeacher(
+      req.headers.authorization
+    );
+    console.log(authenticated);
+    if (authenticated !== false) {
       // now this means that our user is authorized to access this function
       // let us get her the students of her class!
       const studs = await getStudents.getStudents(
@@ -29,7 +31,7 @@ module.exports = (app) => {
   app.post("/api/interaction/addPoints", async (req, res) => {
     // this route is used to add points to students
     const authenticated = auth.authoriseTeacher(req.headers.authorization);
-    if (authenticated!== false) {
+    if (authenticated !== false) {
       // it means that we are authenticated successfully
       // we need to have the student's email id sent to us, to process this request, quite simply
       if (req.body.student_id !== null && req.body.student_id !== "") {
@@ -41,7 +43,8 @@ module.exports = (app) => {
           });
         } else {
           res.status(500).json({
-            message: "Either the student does not exist, or something else went wrong",
+            message:
+              "Either the student does not exist, or something else went wrong",
           });
         }
       } else {

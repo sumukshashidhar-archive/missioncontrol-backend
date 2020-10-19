@@ -12,26 +12,21 @@ const privateKEY = fs.readFileSync(privateKeyPath, "utf-8");
 // options
 const jENV = require("./../config/tokenOptions");
 
-
-
-async function extractor(headerfile){
+async function extractor(headerfile) {
   return new Promise(async (resolve, reject) => {
-    if(headerfile!==undefined){
-      const stringer = headerfile
-      if(stringer.startsWith("Bearer ")) {
-        var token = stringer.substring(8, stringer.length)
-        console.debug("token: ", token)
-        resolve(token)
+    if (headerfile !== undefined) {
+      const stringer = headerfile;
+      if (stringer.startsWith("Bearer ")) {
+        var token = stringer.substring(8, stringer.length);
+        console.debug("token: ", token);
+        resolve(token);
+      } else {
+        resolve(false);
       }
-      else {
-        resolve(false)
-      }
+    } else {
+      resolve(false);
     }
-    else {
-      resolve(false)
-    }
-
-  })
+  });
 }
 
 async function verifier(token) {
@@ -41,16 +36,15 @@ async function verifier(token) {
       decodedToken
     ) {
       if (err) {
-        console.log(err)
+        console.log(err);
         resolve(false);
       } else {
-        console.log(decodedToken)
+        console.log(decodedToken);
         resolve(decodedToken);
       }
     });
   });
 }
-
 
 module.exports = {
   verification: async function (token) {
@@ -70,47 +64,49 @@ module.exports = {
 
   signing: function (username, role, name, grade, section) {
     return jwt.sign(
-      { username: username, role: role, name:name, grade:grade, section:section },
+      {
+        username: username,
+        role: role,
+        name: name,
+        grade: grade,
+        section: section,
+      },
       privateKEY,
       jENV.signOptions
     );
   },
 
-
   extract: (headerfile) => {
     return new Promise(async (resolve, reject) => {
-      const stringer = headerfile
-      if(stringer.startsWith("Bearer ")) {
-        console.log(stringer)
-        var token = stringer.substring(8)
-        console.debug("token: ", token)
-        resolve(token)
+      const stringer = headerfile;
+      if (stringer.startsWith("Bearer ")) {
+        console.log(stringer);
+        var token = stringer.substring(8);
+        console.debug("token: ", token);
+        resolve(token);
+      } else {
+        resolve(false);
       }
-      else {
-        resolve(false)
-      }
-    })
+    });
   },
 
   total_verification: (headerfile) => {
     return new Promise(async (resolve, reject) => {
       // first, we will send the authorization token to the extraction function
-      const extracted_token = await extractor(headerfile)
-      if(extracted_token!==false) {
+      const extracted_token = await extractor(headerfile);
+      if (extracted_token !== false) {
         // then we send it to the verification option
         const decodedToken = await verifier(extracted_token);
-        if(decodedToken!==false) {
-          resolve(decodedToken)
+        if (decodedToken !== false) {
+          resolve(decodedToken);
+        } else {
+          console.log("Extraction OK, but decoding failed");
+          resolve(false);
         }
-        else {
-          console.log("Extraction OK, but decoding failed")
-          resolve(false)
-        }
+      } else {
+        console.log("extraction failed");
+        resolve(false);
       }
-      else {
-        console.log("extraction failed")
-        resolve(false)
-      }
-    })
-  }
+    });
+  },
 };

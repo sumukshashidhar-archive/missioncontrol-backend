@@ -8,7 +8,7 @@ module.exports = {
           resolve(false);
         } else {
           if (obj !== {} && obj !== null) {
-            console.log(obj)
+            console.log(obj);
             student.updateOne(
               { emailID: studentid },
               { totalInteractionPoints: obj["totalInteractionPoints"] + 10 },
