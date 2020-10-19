@@ -12,17 +12,17 @@ app.use(cors());
 require("./routes")(app);
 
 app.listen(process.env.PORT || 80, process.env.IP || "0.0.0.0", function (
-	req,
-	res
+  req,
+  res
 ) {
-	console.info("Server Started");
+  console.info("Server Started");
 });
 
 mongoose
-	.connect(process.env.mongoURI, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		useCreateIndex: true,
-	})
-	.then(() => console.info("MongoDB Connected"))
-	.catch((err) => console.error(err));
+  .connect(process.env.mongoURI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(() => console.info("MongoDB Connected"))
+  .catch((err) => console.error(err));
