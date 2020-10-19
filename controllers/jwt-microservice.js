@@ -43,6 +43,7 @@ async function verifier(token) {
       if (err) {
         resolve(false);
       } else {
+        console.log(decodedToken)
         resolve(decodedToken);
       }
     });
