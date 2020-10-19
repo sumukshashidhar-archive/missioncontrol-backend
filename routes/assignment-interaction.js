@@ -42,7 +42,7 @@ module.exports = (app) => {
     }
   });
 
-  app.post("/api/assignments/students/requestExtension", async (req, res) => {
+  app.post("/api/assignments/student/requestExtension", async (req, res) => {
     const authenticated = await auth.authoriseStudent(
       req.headers.authorization
     );
