@@ -8,15 +8,16 @@ const teacher = require("../models/teacher");
 
 module.exports = (app) => {
   app.post("/login", async function (req, res) {
-    user.findOne({ username: req.body.username }, (err, obj) => {
+    user.findOne({ username: req.body.username }, async (err, obj) => {
       if (err) {
         console.error(err);
       } else {
         if (obj !== undefined && obj !== null) {
-          const resp = password_module.pass_validate(
+          const resp = await password_module.pass_validate(
             req.body.password,
             obj["password"]
           );
+          console.log(resp)
           if (resp) {
             // at this stage, we have successfully authenticated the user
             // we need to now check if its a student or a teacher
