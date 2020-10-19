@@ -5,7 +5,7 @@ var studentSchema = new mongoose.Schema({
   student_name: String,
   student_class: Number,
   student_section: String,
-  totalInteractionPoints: Number,
+  totalInteractionPoints: {type: Number, default:0}
 });
 
 module.exports = mongoose.model("student", studentSchema);
