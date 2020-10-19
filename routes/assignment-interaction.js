@@ -1,4 +1,4 @@
-const auth = require("./../controllers/authorization-microservice");
+const auth = require("../controllers/authorization-microservice");
 module.exports = (app) => {
 
     /*
