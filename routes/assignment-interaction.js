@@ -138,7 +138,7 @@ module.exports = (app) => {
         authenticated["section"],
         authenticated["username"],
         authenticated["name"],
-        req.body.dueDate,
+        1603814323,
         req.body.assignmentName,
         req.body.assignmentLink
       );
