@@ -106,7 +106,7 @@ module.exports = (app) => {
       );
       if (resp !== false) {
         res.status(200).json({
-          object: resp,
+          object: resp
         });
       } else {
         res.status(500).json({
