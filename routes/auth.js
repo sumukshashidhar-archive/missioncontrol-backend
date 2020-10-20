@@ -115,7 +115,7 @@ module.exports = (app) => {
           var responseAccCreate = accCreate.makeTeacherAccount(
             req.body.username,
             req.body.name,
-            parseInt(req.body.class_handled),
+            parseInt(req.body.class_handled, 10),
             req.body.section
           );
           if (responseAccCreate) {
@@ -146,7 +146,7 @@ module.exports = (app) => {
           var responseAccCreate = accCreate.makeStudentAccount(
             req.body.username,
             req.body.name,
-            pareseInt(req.body.classattend),
+            pareseInt(req.body.classattend, 10),
             req.body.section
           );
           if (responseAccCreate) {
