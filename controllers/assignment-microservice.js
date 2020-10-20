@@ -50,6 +50,17 @@ module.exports = {
 
   getAssignmentsTeacher: async (teacher_class, teacher_section) => {
     return new Promise(async (resolve, reject) => {
+      async function querier(studentID) {
+        student.findOne({ emailID: studentID }, { student_name }, async (errx, objx) => {
+          if (err) {
+            console.error(err)
+            return false
+          }
+          else {
+            return (objx)
+          }
+        })
+      }
       assignment.find(
         { class_assigned: teacher_class, section: teacher_section, open: true },
         async (err, obj) => {
@@ -57,6 +68,17 @@ module.exports = {
             console.log(err);
             resolve(false);
           } else {
+            var newArr = [];
+            for (let i = 0; i < obj["submittedStudents"].length; i++) {
+              var resp = await querier(obj.submittedStudents[i])
+              if (resp !== false) {
+                newArr.push(resp)
+              }
+              else {
+                console.error(resp)
+              }
+            }
+            obj["nameList"] = newArr;
             resolve(obj);
           }
         }
