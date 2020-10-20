@@ -127,10 +127,7 @@ module.exports = (app) => {
     );
 
     if (
-      authenticated !== false &&
-      req.body.dueDate !== null &&
-      req.body.assignmentName !== null &&
-      req.body.assignmentLink !== null
+      authenticated !== false
     ) {
       //means we are authorized by this point, so
       const response = await asms.makeAssignment(
