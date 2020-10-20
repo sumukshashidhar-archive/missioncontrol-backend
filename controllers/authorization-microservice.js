@@ -1,20 +1,24 @@
 const jwms = require("./jwt-microservice");
 module.exports = {
   authoriseTeacher: async (token) => {
-    const teach = await jwms.total_verification(token);
-    if (teach !== false && teach["role"] === "teacher") {
-      return teach;
-    } else {
-      return false;
-    }
+    return new Promise(async (resolve, reject) => {
+      const teach = await jwms.total_verification(token);
+      if (teach !== false && teach["role"] === "teacher") {
+        resolve(teach);
+      } else {
+        resolve(false);
+      }
+    })
   },
 
   authoriseStudent: async (token) => {
-    const stud = await jwms.total_verification(token);
-    if (stud !== false && stud["role"] === "student") {
-      return stud;
-    } else {
-      return false;
-    }
+    return new Promise(async (resolve, reject) => {
+      const stud = await jwms.total_verification(token);
+      if (stud !== false && stud["role"] === "student") {
+        return (stud);
+      } else {
+        resolve(false);
+      }
+    })
   },
 };
