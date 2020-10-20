@@ -11,7 +11,7 @@ module.exports = {
             console.log(obj);
             student.updateOne(
               { emailID: studentid },
-              { totalInteractionPoints: obj["totalInteractionPoints"] + 10 },
+              { totalInteractionPoints: obj["totalInteractionPoints"] + 2 },
               async (err2, obj2) => {
                 if (err2) {
                   console.error(err);
