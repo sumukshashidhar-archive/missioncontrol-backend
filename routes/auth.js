@@ -14,11 +14,15 @@ const registration_microservice = require("./../controllers/registration-service
 const account_creation_microservice = require("./../controllers/account_creation-microservice");
 
 
+const logger = require("./../config/logger")
+
 module.exports = (app) => {
     app.post("/login", async function (req, res) {
+        logger.info(`Reached Login Method. Request is: ${req.body} `)
+        logger.debug(`Credentials sent are: Username: ${req.body.username} and Password ${req.body.password}`)
         user.findOne({username: req.body.username}, async (err, obj) => {
             if (err) {
-                console.error(err);
+                logger.error(err);
             } else {
                 if (obj !== undefined && obj !== null) {
                     const resp = await password_module.pass_validate(
