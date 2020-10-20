@@ -12,7 +12,7 @@ const token_microservice = require("./../controllers/jwt-microservice");
 const password_module = require("../controllers/auth-microservice");
 const registration_microservice = require("./../controllers/registration-service");
 const account_creation_microservice = require("./../controllers/account_creation-microservice");
-
+const login_microservice = require("./../controllers/login-microservice")
 
 const logger = require("./../config/logger")
 
@@ -20,75 +20,18 @@ module.exports = (app) => {
     app.post("/login", async function (req, res) {
         logger.info(`Reached Login Method. Request is: ${req.body} `)
         logger.debug(`Credentials sent are: Username: ${req.body.username} and Password ${req.body.password}`)
-        user.findOne({username: req.body.username}, async (err, obj) => {
-            if (err) {
-                logger.error(err);
-            } else {
-                if (obj !== undefined && obj !== null) {
-                    const resp = await password_module.pass_validate(
-                        req.body.password,
-                        obj["password"]
-                    );
-                    console.log(resp);
-                    if (resp) {
-                        // at this stage, we have successfully authenticated the user
-                        // we need to now check if its a student or a teacher
-                        if (obj["role"] === "student") {
-                            student.findOne(
-                                {emailID: req.body.username},
-                                async (err2, obj2) => {
-                                    if (err2) {
-                                        console.error(err2);
-                                    } else {
-                                        res.json({
-                                            status: 200,
-                                            token: token_microservice.signing(
-                                                obj["username"],
-                                                obj["role"],
-                                                obj2["student_name"],
-                                                obj2["student_class"],
-                                                obj2["student_section"]
-                                            ),
-                                        });
-                                    }
-                                }
-                            );
-                        } else if (obj["role"] === "teacher") {
-                            teacher.findOne(
-                                {emailID: req.body.username},
-                                async (err2, obj2) => {
-                                    if (err2) {
-                                        console.error(err2);
-                                    } else {
-                                        res.json({
-                                            status: 200,
-                                            token: token_microservice.signing(
-                                                obj["username"],
-                                                obj["role"],
-                                                obj2["teacher_name"],
-                                                obj2["teacher_class"],
-                                                obj2["teacher_section"]
-                                            ),
-                                        });
-                                    }
-                                }
-                            );
-                        }
-                    } else {
-                        res.json({
-                            status: 403,
-                            message: "Password Validation Failed",
-                        });
-                    }
-                } else {
-                    console.log(obj);
-                    res.json({
-                        status: 404,
-                        message: "This user was not found",
-                    });
-                }
+        const response = await login_microservice.authenticate(req.body.username, req.body.password)
+        if(response["status"]) {
+            res.status(200).json({
+                "message":"Successful",
+                "token":response["token"]
             }
-        });
+        }
+        else {
+            res.status(403).json({
+                "message":"No Authorization"
+            }
+        }
     }),
         app.post("/register", async function (req, res) {
             if (
