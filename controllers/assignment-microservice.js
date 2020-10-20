@@ -162,4 +162,13 @@ module.exports = {
       );
     });
   },
+
+
+  uploadCorrection: async (correctionLink, studentID, remarks) => {
+    
+  }, 
+
+  uploadAssignemnt: async (assignmentLinker, studentID) => {
+
+  }
 };
