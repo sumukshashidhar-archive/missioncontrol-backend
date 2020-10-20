@@ -20,30 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab689df0-e6fb-474b-9c68-b4bd0974696c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/config/tokenOptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/tokenOptions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/account_creation-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/account_creation-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/assignment-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/assignment-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/auth-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/auth-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/authorization-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/authorization-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/conflict_check-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/conflict_check-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/dashboard-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/dashboard-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/jwt-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/jwt-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/points_control-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/points_control-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/registration-service.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/registration-service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/student_retrieve-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/student_retrieve-microservice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/interaction/Interaction-Functions.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/assingment.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/assingment.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/student.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/student.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/teacher.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/teacher.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/assignment-interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/assignment-interaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/core.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/dashboards.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/dashboards.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/interactTeacher.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/interactTeacher.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +53,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603217337559</updated>
-      <workItem from="1603217339998" duration="532000" />
+      <workItem from="1603217339998" duration="615000" />
     </task>
     <servers />
   </component>

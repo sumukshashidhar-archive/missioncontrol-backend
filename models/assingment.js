@@ -9,14 +9,16 @@ const assignmentSchema = new mongoose.Schema({
         dueDate: Number,
         assignmentName: String,
         assignmentLink: String,
+        open: {type: Boolean, default: true},
+    },
+    student_based_data: {
+        extensionPurchasedBy: {type: Array, default: []},
+        newDueDate: {type: Array, default: []},
+        submittedStudents: {type: Array, default: []},
+        submittedStudentsLink: {type: Array, default: []},
+        correctionLink: {type: Array, default: []},
+        remarks: {type: Array, default: []},
     }
-    open: {type: Boolean, default: true},
-    extensionPurchasedBy: {type: Array, default: []},
-    newDueDate: {type: Array, default: []},
-    submittedStudents: {type: Array, default: []},
-    submittedStudentsLink: {type: Array, default: []},
-    correctionLink: {type: Array, default: []},
-    remarks: {type: Array, default: []},
 });
 
 module.exports = mongoose.model("assignment", assignmentSchema);
