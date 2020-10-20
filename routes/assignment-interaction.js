@@ -40,6 +40,11 @@ module.exports = (app) => {
 
     if (authenticated !== false) {
     }
+    else {
+      res.status(403).json({
+        "message":"No Auth"
+      })
+    }
   });
 
   app.post("/api/assignments/student/requestExtension", async (req, res) => {
