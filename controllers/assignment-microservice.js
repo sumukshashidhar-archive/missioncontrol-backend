@@ -158,7 +158,7 @@ module.exports = {
     });
   },
 
-  uploadCorrection: async (correctionLink, studentID, remarks) => {},
+  uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => { },
 
   uploadAssignemnt: async (assignmentLinker, studentID, assignment_id) => {
     return new Promise(async (resolve, reject) => {

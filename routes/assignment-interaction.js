@@ -158,4 +158,28 @@ module.exports = (app) => {
       });
     }
   });
+
+
+  app.post('/api/assignment/teacher/uploadCorrection', async (req, res) => {
+    const authenticated = await auth.authoriseTeacher(
+      req.headers.authorization
+    );
+    if (authenticated !== false) {
+      const resp = await asms.uploadCorrection(req.body.correctionLink, req.body.studentID, req.body.assignmentID, req.body.remarks)
+      if (resp) {
+
+      }
+      else {
+        res.status(500).json({
+          "message": "Something went wrong"
+        })
+      }
+    }
+    else {
+      res.status(403).json({
+        message:
+          "Either Auth Failed, or you failed to supply the required parameters",
+      });
+    }
+  })
 };
