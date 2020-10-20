@@ -20,8 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab689df0-e6fb-474b-9c68-b4bd0974696c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/controllers/login-microservice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +50,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="settings.editor.selected.configurable" value="editing.templates" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -61,7 +61,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603217337559</updated>
-      <workItem from="1603217339998" duration="3086000" />
+      <workItem from="1603217339998" duration="3938000" />
     </task>
     <servers />
   </component>
@@ -80,9 +80,9 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="468" y="168" key="SettingsEditor" timestamp="1603218048794">
+    <state x="468" y="168" key="SettingsEditor" timestamp="1603221324363">
       <screen x="0" y="23" width="1920" height="1013" />
     </state>
-    <state x="468" y="168" key="SettingsEditor/0.23.1920.1013@0.23.1920.1013" timestamp="1603218048794" />
+    <state x="468" y="168" key="SettingsEditor/0.23.1920.1013@0.23.1920.1013" timestamp="1603221324363" />
   </component>
 </project>
