@@ -35,8 +35,10 @@ module.exports = (app) => {
       // it means that we are authenticated successfully
       // we need to have the student's email id sent to us, to process this request, quite simply
       if (req.body.student_id !== null && req.body.student_id !== "") {
+        console.log(req.body.student_id)
         // now that means we have the student id defined as well, and that we can just increase points
         const response = await ptsService.addPoints(req.body.student_id);
+        console.log(response)
         if (response) {
           res.status(200).json({
             message: "Successfully Incremented Points",
