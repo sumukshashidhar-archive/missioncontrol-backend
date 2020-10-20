@@ -167,7 +167,9 @@ module.exports = (app) => {
     if (authenticated !== false) {
       const resp = await asms.uploadCorrection(req.body.correctionLink, req.body.studentID, req.body.assignmentID, req.body.remarks)
       if (resp) {
-
+        res.status(200).json({
+          "message": "Uploaded Correction Successfully"
+        })
       }
       else {
         res.status(500).json({
