@@ -24,6 +24,10 @@ module.exports = {
             user.findOne({username:username}, async function(err, obj) {
                 if (err) {
                     logger.error(err)
+                    resolve({
+                        "status":false,
+                        "message":"Internal Error"
+                    })
                 }
                 else {
                     logger.debug(`Successfully got: ${obj} while finding user`)
@@ -41,7 +45,8 @@ module.exports = {
                                     if (err2) {
                                         logger.error(err)
                                         resolve({
-                                            "status": false
+                                            "status": false,
+                                            "message":"Internal Error"
                                         })
                                     } else {
                                         logger.debug(`Successfully got: ${obj2} while finding student`)
@@ -58,7 +63,8 @@ module.exports = {
                                     if (err2) {
                                         logger.error(err)
                                         resolve({
-                                            "status": false
+                                            "status": false,
+                                            "message":"Internal Error"
                                         })
                                     } else {
                                         logger.debug(`Successfully got: ${obj2} in teacher finding`)
@@ -72,7 +78,8 @@ module.exports = {
                             }
                         } else {
                             resolve({
-                                "status": false
+                                "status": false,
+                                "message":"Wrong Password"
                             })
                         }
                     } else {
