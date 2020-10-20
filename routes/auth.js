@@ -25,12 +25,12 @@ module.exports = (app) => {
             res.status(200).json({
                 "message":"Successful",
                 "token":response["token"]
-            }
+            })
         }
         else {
             res.status(403).json({
                 "message":"No Authorization"
-            }
+            })
         }
     }),
         app.post("/register", async function (req, res) {

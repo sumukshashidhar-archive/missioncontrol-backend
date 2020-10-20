@@ -21,6 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ab689df0-e6fb-474b-9c68-b4bd0974696c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/logger.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/logger.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/login-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/login-microservice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
     </list>
@@ -62,7 +63,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1603217337559</updated>
-      <workItem from="1603217339998" duration="4439000" />
+      <workItem from="1603217339998" duration="4656000" />
     </task>
     <servers />
   </component>

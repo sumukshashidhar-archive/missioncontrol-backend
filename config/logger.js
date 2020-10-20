@@ -26,5 +26,6 @@ const logger = createLogger({
 
         }),
     ],
+    level: 'debug'
 });
 module.exports = logger;

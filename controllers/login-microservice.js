@@ -33,47 +33,54 @@ module.exports = {
                         if (response_from_validation) {
                             // now we check if it is a student or a teacher
                             if (obj["role"] === 'student') {
-                                student.findOne({emailID: username}, {student_name: 1, student_class: 1, student_section: 1}, async function(err2, obj2) {
+                                student.findOne({emailID: username}, {
+                                    student_name: 1,
+                                    student_class: 1,
+                                    student_section: 1
+                                }, async function (err2, obj2) {
                                     if (err2) {
                                         logger.error(err)
                                         resolve({
-                                            "status":false
+                                            "status": false
                                         })
-                                    }
-                                    else {
+                                    } else {
                                         logger.debug(`Successfully got: ${obj2} while finding student`)
                                         const token = token_microservice.signing(username, 'student', obj2["student_name"], obj2["student_class"], obj2["student_section"])
                                         resolve({
-                                            "status":true,
-                                            "token":token
+                                            "status": true,
+                                            "token": token
                                         })
                                     }
                                 })
-                            }
-                            else {
+                            } else {
                                 // if not student, then obviously teacher
-                                teacher.findOne({emailID: username}, {}, async function(err2, obj2) {
+                                teacher.findOne({emailID: username}, {}, async function (err2, obj2) {
                                     if (err2) {
                                         logger.error(err)
                                         resolve({
-                                            "status":false
+                                            "status": false
                                         })
-                                    }
-                                    else {
+                                    } else {
                                         logger.debug(`Successfully got: ${obj2} in teacher finding`)
                                         const token = token_microservice.signing(username, 'teacher', obj2["teacher_name"], obj2["teacher_class"], obj2["teacher_section"])
                                         resolve({
-                                            "status":true,
-                                            "token":token
+                                            "status": true,
+                                            "token": token
                                         })
                                     }
                                 })
                             }
                         } else {
                             resolve({
-                                "status":false
+                                "status": false
                             })
                         }
+                    } else {
+                        logger.debug("The user was not found")
+                        resolve({
+                            "status":false,
+                            "message":"User not found"
+                        })
                     }
                 }
             })
