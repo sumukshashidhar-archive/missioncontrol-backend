@@ -1,10 +1,18 @@
-const password_module = require("../controllers/auth-microservice");
-const registration = require("./../controllers/registration-service");
+/*
+    MODELS
+ */
 const user = require("./../models/user");
 const student = require("./../models/student");
-const tokenms = require("./../controllers/jwt-microservice");
-const accCreate = require("./../controllers/account_creation-microservice");
 const teacher = require("../models/teacher");
+
+/*
+    SERVICES
+ */
+const token_microservice = require("./../controllers/jwt-microservice");
+const password_module = require("../controllers/auth-microservice");
+const registration_microservice = require("./../controllers/registration-service");
+const account_creation_microservice = require("./../controllers/account_creation-microservice");
+
 
 module.exports = (app) => {
     app.post("/login", async function (req, res) {
@@ -30,7 +38,7 @@ module.exports = (app) => {
                                     } else {
                                         res.json({
                                             status: 200,
-                                            token: tokenms.signing(
+                                            token: token_microservice.signing(
                                                 obj["username"],
                                                 obj["role"],
                                                 obj2["student_name"],
@@ -50,7 +58,7 @@ module.exports = (app) => {
                                     } else {
                                         res.json({
                                             status: 200,
-                                            token: tokenms.signing(
+                                            token: token_microservice.signing(
                                                 obj["username"],
                                                 obj["role"],
                                                 obj2["teacher_name"],
@@ -83,7 +91,7 @@ module.exports = (app) => {
                 req.body.creation_password === process.env.ADMIN_CREATION_SECRET &&
                 req.body.role === "admin"
             ) {
-                const response = await registration.makeUser(
+                const response = await registration_microservice.makeUser(
                     req.body.username,
                     req.body.password,
                     req.body.role
@@ -105,14 +113,14 @@ module.exports = (app) => {
                 req.body.role === "teacher"
             ) {
                 // this is for registration of regular users
-                const response = await registration.makeUser(
+                const response = await registration_microservice.makeUser(
                     req.body.username,
                     req.body.password,
                     req.body.role
                 );
                 if (response) {
                     // teacher USER is created, now we create the actual teacher account!
-                    var responseAccCreate = accCreate.makeTeacherAccount(
+                    var responseAccCreate = account_creation_microservice.makeTeacherAccount(
                         req.body.username,
                         req.body.name,
                         12,
@@ -137,13 +145,13 @@ module.exports = (app) => {
                 }
             } else if (req.body.role === "student") {
                 // this is for registration of regular users
-                const response = await registration.makeUser(
+                const response = await registration_microservice.makeUser(
                     req.body.username,
                     req.body.password,
                     req.body.role
                 );
                 if (response) {
-                    var responseAccCreate = accCreate.makeStudentAccount(
+                    var responseAccCreate = account_creation_microservice.makeStudentAccount(
                         req.body.username,
                         req.body.name,
                         12,

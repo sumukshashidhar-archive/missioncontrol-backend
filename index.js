@@ -15,7 +15,7 @@ require("dotenv").config();
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-    
+
 require("./routes")(app);
 
 /*
