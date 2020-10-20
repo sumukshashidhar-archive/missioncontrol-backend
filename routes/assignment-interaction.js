@@ -39,12 +39,25 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
-      
-    }
-    else {
+      const resp = await asms.uploadAssignemnt(
+        req.body.assignmentLink,
+        authenticated["username"],
+        req.body.assignmentID
+      );
+      if (resp) {
+        // means that the upload was successful
+        res.status(200).json({
+          message: "Uploaded Successfully",
+        });
+      } else {
+        res.status(500).json({
+          message: "Was not able to upload it",
+        });
+      }
+    } else {
       res.status(403).json({
-        "message":"No Auth"
-      })
+        message: "No Auth",
+      });
     }
   });
 

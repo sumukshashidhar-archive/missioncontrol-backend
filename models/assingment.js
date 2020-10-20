@@ -10,14 +10,11 @@ var assignmentSchema = new mongoose.Schema({
   assignmentLink: String,
   open: { type: Boolean, default: true },
   extensionPurchasedBy: { type: Array, default: [] },
-  extensionPurchasedByNames: { type: Array, default: [] },
   newDueDate: { type: Array, default: [] },
   submittedStudents: { type: Array, default: [] },
-  submittedStudentsNames: { type: Array, default: [] },
   submittedStudentsLink: { type: Array, default: [] },
   correctionLink: { type: Array, default: [] },
   remarks: { type: Array, default: [] },
-
 });
 
 module.exports = mongoose.model("assignment", assignmentSchema);

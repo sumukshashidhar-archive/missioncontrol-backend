@@ -124,9 +124,6 @@ module.exports = {
                         } else {
                           // now we add the name of the student to the lists as well, along with IDs
                           obj2["extensionPurchasedBy"].push(student_id);
-                          obj2["extensionPurchasedByNames"].push(
-                            obj["student_name"]
-                          );
                           obj2["newDueDate"].push(newDue);
 
                           // finally, assignment updating
@@ -136,8 +133,6 @@ module.exports = {
                             {
                               extensionPurchasedBy:
                                 obj2["extensionPurchasedBy"],
-                              extensionPurchasedByNames:
-                                obj2["extensionPurchasedByNames"],
                               newDueDate: newDue,
                             },
                             async (err4, obj4) => {
@@ -163,12 +158,68 @@ module.exports = {
     });
   },
 
+  uploadCorrection: async (correctionLink, studentID, remarks) => {},
 
-  uploadCorrection: async (correctionLink, studentID, remarks) => {
-    
-  }, 
-
-  uploadAssignemnt: async (assignmentLinker, studentID) => {
-
-  }
+  uploadAssignemnt: async (assignmentLinker, studentID, assignment_id) => {
+    return new Promise(async (resolve, reject) => {
+      // for students to upload their assignments.
+      // step 1: check if the assignment has already been uploaded
+      assignment.findById(
+        { _id: assignment_id, open: true },
+        { submittedStudents: 1, submittedStudentsLink: 1 },
+        async (err, obj) => {
+          if (err) {
+            console.error(err);
+            resolve(false);
+          } else {
+            console.debug(obj);
+            for (let i = 0; i < obj["submittedStudents"].length; i++) {
+              if (obj["submittedStudents"][i] === studentID) {
+                // means that the student has already submitted, and wants to resubmit. we'll allow it
+                obj["submittedStudentsLink"][i] = {
+                  link: assignmentLinker,
+                  time: new Date().getTime(),
+                };
+                assignment.updateOne(
+                  { _id: assignment_id },
+                  { submittedStudentsLink: obj["submittedStudentsLink"] },
+                  async (err2, obj2) => {
+                    if (err2) {
+                      console.error(err);
+                    } else {
+                      //successfully updated
+                      resolve(true);
+                      return;
+                    }
+                  }
+                );
+              }
+            }
+            // if it reaches here, it means that it ran through the entire thing, and did not find it
+            obj["submittedStudents"].push(studentID);
+            obj["submittedStudentsLink"].push({
+              link: assignmentLinker,
+              time: new Date().getTime(),
+            });
+            assignment.updateOne(
+              { _id: assignment_id },
+              {
+                submittedStudentsLink: obj["submittedStudentsLink"],
+                submittedStudents: obj["submittedStudents"],
+              },
+              async (err3, obj3) => {
+                if (err3) {
+                  console.error(err);
+                } else {
+                  //successfully updated
+                  resolve(true);
+                  return;
+                }
+              }
+            );
+          }
+        }
+      );
+    });
+  },
 };
