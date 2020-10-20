@@ -70,22 +70,21 @@ module.exports = {
             console.log(err);
             resolve(false);
           } else {
+            var heavyobj = { arrys: [], mains: obj }
             for (let j = 0; j < obj.length; j++) {
               var newArr = [];
               for (let i = 0; i < obj[j]["submittedStudents"].length; i++) {
                 var resp = await querier("sumuk@somethingelse.com")
                 if (resp !== false) {
-                  console.log("The response being pushed is:", resp)
                   newArr.push(resp)
                 }
                 else {
                   console.error(resp)
                 }
               }
-              obj[j]["submittedStudents"] = newArr;
+              heavyobj["arrys"].push(newArr)
             }
-            console.log(obj)
-            resolve(obj);
+            resolve(heavyobj);
           }
         }
       );
