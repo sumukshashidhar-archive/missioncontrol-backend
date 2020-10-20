@@ -52,11 +52,12 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       async function querier(studentID) {
         student.findOne({ emailID: studentID }, { student_name: 1 }, async (errx, objx) => {
-          if (err) {
-            console.error(err)
+          if (errx) {
+            console.error(errx)
             return false
           }
           else {
+
             return (objx)
           }
         })
@@ -81,6 +82,7 @@ module.exports = {
               }
               obj[j]["nameList"] = newArr;
             }
+            console.log(obj)
             resolve(obj);
           }
         }
