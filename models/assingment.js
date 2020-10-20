@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const assignmentSchema = new mongoose.Schema({
+    // assignment data is constant for the assignment, and does not have modifications
     assignment_data: {
         class_assigned: Number,
         section: String,
@@ -13,11 +14,7 @@ const assignmentSchema = new mongoose.Schema({
     },
     student_based_data: {
         extensionPurchasedBy: {type: Array, default: []},
-        newDueDate: {type: Array, default: []},
         submittedStudents: {type: Array, default: []},
-        submittedStudentsLink: {type: Array, default: []},
-        correctionLink: {type: Array, default: []},
-        remarks: {type: Array, default: []},
     }
 });
 
