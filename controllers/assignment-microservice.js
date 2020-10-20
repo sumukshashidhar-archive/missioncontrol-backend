@@ -161,7 +161,35 @@ module.exports = {
   uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => {
     return new Promise(async (resolve, reject) => {
       assingment.findById({ _id: assignment_id }, async (err, obj) => {
-
+        if (err) {
+          console.error(err)
+          resolve(false)
+          return
+        }
+        else {
+          try {
+            for (let i = 0; i < obj["submittedStudents"].length; i++) {
+              if (obj["submittedStudents"][i] === studentID) {
+                // we found the student that we wish to upload the correction document to!
+                obj["correctionLink"][i] = correctionLink
+                obj["remarks"][i] = remarks
+                assignment.updateOne({ _id: assignment_id }, { correctionLink: obj["correctionLink"], remarks: obj["remarks"] }, async (err2, obj2) => {
+                  if (err2) {
+                    console.error(err2)
+                  }
+                  else {
+                    resolve(true)
+                    return
+                  }
+                })
+              }
+            }
+            resolve(false)
+          } catch (error) {
+            resolve(false)
+            return
+          }
+        }
       })
     })
   },
