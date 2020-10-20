@@ -39,6 +39,7 @@ module.exports = (app) => {
     );
 
     if (authenticated !== false) {
+      
     }
     else {
       res.status(403).json({
