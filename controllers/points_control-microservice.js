@@ -30,4 +30,18 @@ module.exports = {
       });
     });
   },
+
+
+  sendPoints: async (studentid) => {
+    return new Promise(async (resolve, reject) => {
+      student.findOne({ emailID: studentid }, { totalInteractionPoints: 1 }, async (err, obj) => {
+        if (err) {
+          console.error(err)
+        }
+        else {
+          resolve(obj)
+        }
+      })
+    })
+  }
 };

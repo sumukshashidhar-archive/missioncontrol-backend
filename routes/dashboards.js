@@ -46,4 +46,5 @@ module.exports = (app) => {
     }
     console.debug("Hit the admin dashboard");
   });
+
 };
