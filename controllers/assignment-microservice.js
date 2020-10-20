@@ -80,9 +80,9 @@ module.exports = {
                   console.error(resp)
                 }
               }
-              obj[j]["nameList"] = newArr;
+              obj[j].nameList = newArr;
+              console.log(obj[j].nameList)
             }
-            console.log(obj)
             resolve(obj);
           }
         }
