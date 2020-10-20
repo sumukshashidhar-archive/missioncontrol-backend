@@ -158,40 +158,50 @@ module.exports = {
     });
   },
 
-  uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => {
+  uploadCorrection: async (
+    correctionLink,
+    studentID,
+    assignment_id,
+    remarks
+  ) => {
     return new Promise(async (resolve, reject) => {
       assingment.findById({ _id: assignment_id }, async (err, obj) => {
         if (err) {
-          console.error(err)
-          resolve(false)
-          return
-        }
-        else {
+          console.error(err);
+          resolve(false);
+          return;
+        } else {
           try {
             for (let i = 0; i < obj["submittedStudents"].length; i++) {
               if (obj["submittedStudents"][i] === studentID) {
                 // we found the student that we wish to upload the correction document to!
-                obj["correctionLink"][i] = correctionLink
-                obj["remarks"][i] = remarks
-                assignment.updateOne({ _id: assignment_id }, { correctionLink: obj["correctionLink"], remarks: obj["remarks"] }, async (err2, obj2) => {
-                  if (err2) {
-                    console.error(err2)
+                obj["correctionLink"][i] = correctionLink;
+                obj["remarks"][i] = remarks;
+                assignment.updateOne(
+                  { _id: assignment_id },
+                  {
+                    correctionLink: obj["correctionLink"],
+                    remarks: obj["remarks"],
+                  },
+                  async (err2, obj2) => {
+                    if (err2) {
+                      console.error(err2);
+                    } else {
+                      console.log("Comes here");
+                      resolve(true);
+                      return;
+                    }
                   }
-                  else {
-                    console.log("Comes here")
-                    resolve(true)
-                    return
-                  }
-                })
+                );
               }
             }
           } catch (error) {
-            resolve(false)
-            return
+            resolve(false);
+            return;
           }
         }
-      })
-    })
+      });
+    });
   },
 
   uploadAssignemnt: async (assignmentLinker, studentID, assignment_id) => {
@@ -200,7 +210,12 @@ module.exports = {
       // step 1: check if the assignment has already been uploaded
       assignment.findById(
         { _id: assignment_id, open: true },
-        { submittedStudents: 1, submittedStudentsLink: 1, correctionLink: 1, remarks: 1 },
+        {
+          submittedStudents: 1,
+          submittedStudentsLink: 1,
+          correctionLink: 1,
+          remarks: 1,
+        },
         async (err, obj) => {
           if (err) {
             console.error(err);
@@ -235,15 +250,15 @@ module.exports = {
               link: assignmentLinker,
               time: new Date().getTime(),
             });
-            obj["correctionLink"].push(null)
-            obj["remarks"].push(null)
+            obj["correctionLink"].push(null);
+            obj["remarks"].push(null);
             assignment.updateOne(
               { _id: assignment_id },
               {
                 submittedStudentsLink: obj["submittedStudentsLink"],
                 submittedStudents: obj["submittedStudents"],
                 remarks: obj["remarks"],
-                correctionLink: obj["correctionLink"]
+                correctionLink: obj["correctionLink"],
               },
               async (err3, obj3) => {
                 if (err3) {
