@@ -5,7 +5,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
+const logger = require('./config/logger')
 
 /*
     INITIALIZATIONS
@@ -26,7 +26,7 @@ app.listen(process.env.PORT || 80, process.env.IP || "0.0.0.0", function (
     req,
     res
 ) {
-    console.info("Server Started");
+    logger.info("Server Started");
 });
 
 
@@ -39,5 +39,5 @@ mongoose
         useUnifiedTopology: true,
         useCreateIndex: true,
     })
-    .then(() => console.info("MongoDB Connected"))
+    .then(() => logger.info("MongoDB Connected"))
     .catch((err) => console.error(err));
