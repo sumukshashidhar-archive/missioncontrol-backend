@@ -52,16 +52,19 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       async function querier(studentID) {
         return new Promise(async (ress, rejj) => {
-          await student.findOne({ emailID: studentID }, { student_name: 1 }, (errx, objx) => {
-            if (errx) {
-              console.error(errx)
-              return false
+          await student.findOne(
+            { emailID: studentID },
+            { student_name: 1 },
+            (errx, objx) => {
+              if (errx) {
+                console.error(errx);
+                return false;
+              } else {
+                ress(objx.student_name);
+              }
             }
-            else {
-              ress(objx.student_name)
-            }
-          })
-        })
+          );
+        });
       }
       assignment.find(
         { class_assigned: teacher_class, section: teacher_section, open: true },
@@ -70,19 +73,18 @@ module.exports = {
             console.log(err);
             resolve(false);
           } else {
-            var heavyobj = { arrys: [], mains: obj }
+            var heavyobj = { arrys: [], mains: obj };
             for (let j = 0; j < obj.length; j++) {
               var newArr = [];
               for (let i = 0; i < obj[j]["submittedStudents"].length; i++) {
-                var resp = await querier("sumuk@somethingelse.com")
+                var resp = await querier("sumuk@somethingelse.com");
                 if (resp !== false) {
-                  newArr.push(resp)
-                }
-                else {
-                  console.error(resp)
+                  newArr.push(resp);
+                } else {
+                  console.error(resp);
                 }
               }
-              heavyobj["arrys"].push(newArr)
+              heavyobj["arrys"].push(newArr);
             }
             resolve(heavyobj);
           }

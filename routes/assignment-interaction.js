@@ -1,6 +1,6 @@
 const auth = require("../controllers/authorization-microservice");
 const asms = require("./../controllers/assignment-microservice");
-const ptms = require("./../controllers/points_control-microservice")
+const ptms = require("./../controllers/points_control-microservice");
 module.exports = (app) => {
   /*
   Gets all the assignments due for the given student.
@@ -107,7 +107,7 @@ module.exports = (app) => {
       );
       if (resp !== false) {
         res.status(200).json({
-          object: resp
+          object: resp,
         });
       } else {
         res.status(500).json({
@@ -188,19 +188,17 @@ module.exports = (app) => {
     }
   });
 
-
   app.get("/api/student/getPoints", async (req, res) => {
     const authenticated = await auth.authoriseStudent(
       req.headers.authorization
     );
     if (authenticated !== false) {
-      const resp = await ptms.sendPoints(authenticated["username"])
+      const resp = await ptms.sendPoints(authenticated["username"]);
       if (resp) {
-        res.status(200).json({ "points": resp["totalInteractionPoints"] })
-      }
-      else {
-        res.status(500).send("No")
+        res.status(200).json({ points: resp["totalInteractionPoints"] });
+      } else {
+        res.status(500).send("No");
       }
     }
-  })
+  });
 };
