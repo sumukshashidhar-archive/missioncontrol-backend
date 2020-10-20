@@ -196,7 +196,7 @@ module.exports = (app) => {
     if (authenticated !== false) {
       const resp = await ptms.sendPoints(authenticated["username"])
       if (resp) {
-        res.send(resp["totalInteractionPoints"])
+        res.status(200).json({ "points": resp["totalInteractionPoints"] })
       }
       else {
         res.status(500).send("No")

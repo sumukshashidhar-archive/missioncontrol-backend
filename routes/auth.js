@@ -146,7 +146,7 @@ module.exports = (app) => {
           var responseAccCreate = accCreate.makeStudentAccount(
             req.body.username,
             req.body.name,
-            req.body.classattend,
+            Number(req.body.classattend),
             req.body.section
           );
           if (responseAccCreate) {
