@@ -178,13 +178,13 @@ module.exports = {
                     console.error(err2)
                   }
                   else {
+                    console.log("Comes here")
                     resolve(true)
                     return
                   }
                 })
               }
             }
-            resolve(false)
           } catch (error) {
             resolve(false)
             return
