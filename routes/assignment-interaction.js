@@ -80,10 +80,6 @@ module.exports = (app) => {
 
         if (
             authenticated !== false &&
-            req.body.assignmentID !== null &&
-            req.body.assignmentID !== undefined &&
-            req.body.duration !== undefined &&
-            req.body.duration !== null
         ) {
             const resp = await asms.requestExtension(
                 authenticated["username"],
