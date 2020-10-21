@@ -53,6 +53,7 @@ module.exports = {
     },
 
     getAssignmentsTeacher: async (teacher_class, teacher_section) => {
+        
     },
 
     requestExtension: async (student_id, assingment_id, duration) => {
