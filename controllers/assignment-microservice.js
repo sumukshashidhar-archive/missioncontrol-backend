@@ -118,40 +118,35 @@ module.exports = {
     },
 
     uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => {
+        logger.debug(`Reached correction upload with ${correctionLink}, ${studentID}, ${assignment_id}, ${remarks}`)
         return new Promise(async (resolve, reject) => {
             assingment.findById({_id: assignment_id}, async (err, obj) => {
                 if (err) {
-                    console.error(err);
+                    logger.error(err);
                     resolve(false);
 
                 } else {
-                    try {
-                        for (let i = 0; i < obj["submittedStudents"].length; i++) {
-                            if (obj["submittedStudents"][i] === studentID) {
-                                // we found the student that we wish to upload the correction document to!
-                                obj["correctionLink"][i] = correctionLink;
-                                obj["remarks"][i] = remarks;
-                                assignment.updateOne(
-                                    {_id: assignment_id},
-                                    {
-                                        correctionLink: obj["correctionLink"],
-                                        remarks: obj["remarks"],
-                                    },
-                                    async (err2, obj2) => {
-                                        if (err2) {
-                                            console.error(err2);
-                                        } else {
-                                            console.log("Comes here");
-                                            resolve(true);
-
-                                        }
-                                    }
-                                );
+                    for(let i=0; i<obj.student_based_data.submittedStudents.length; i++) {
+                        if(obj.student_based_data.submittedStudents[i].studentID === studentID){
+                            // means that we found the appropriate student.
+                            // we update the object
+                            obj.student_based_data.submittedStudents[i] = {
+                                student_name: obj.student_based_data.submittedStudents[i].student_name,
+                                studentEmail: obj.student_based_data.submittedStudents[i].studentEmail,
+                                link: obj.student_based_data.submittedStudents[i].link,
+                                correctionLink: correctionLink,
                             }
+                            assignment.updateOne({_id: assignment_id}, {student_based_data: obj["student_based_data"]}, async function(err2, obj2) {
+                                if (err2) {
+                                    logger.error(err)
+                                    resolve(false)
+                                }
+                                else {
+                                    logger.debug(`Successfully got: ${obj2}`)
+                                    resolve(true)
+                                }
+                            })
                         }
-                    } catch (error) {
-                        resolve(false);
-
                     }
                 }
             });
