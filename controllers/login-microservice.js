@@ -33,7 +33,7 @@ module.exports = {
                     logger.debug(`Successfully got: ${obj} while finding user`)
                     if (obj !== undefined && obj !== null) {
                         const response_from_validation = await password_module.pass_validate(password, obj["password"])
-                        logger.silly(response_from_validation)
+                        logger.debug(response_from_validation)
                         if (response_from_validation) {
                             // now we check if it is a student or a teacher
                             if (obj["role"] === 'student') {
