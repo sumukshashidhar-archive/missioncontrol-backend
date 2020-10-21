@@ -209,7 +209,7 @@ module.exports = {
     uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => {
         logger.debug(`Reached correction upload with ${correctionLink}, ${studentID}, ${assignment_id}, ${remarks}`)
         return new Promise(async (resolve, reject) => {
-            assingment.findById({_id: assignment_id}, async (err, obj) => {
+            assignment.findById({_id: assignment_id}, async (err, obj) => {
                 if (err) {
                     logger.error(err);
                     resolve(false);
