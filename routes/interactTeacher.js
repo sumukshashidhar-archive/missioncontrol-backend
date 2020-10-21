@@ -46,10 +46,9 @@ module.exports = (app) => {
                 req.body.student_id !== "" &&
                 req.body.student_id !== undefined
             ) {
-                console.log(req.body.student_id);
+                logger.debug(` Giving points to ${req.body.student_id}`);
                 // now that means we have the student id defined as well, and that we can just increase points
                 const response = await ptsService.addPoints(req.body.student_id);
-                console.log(response);
                 if (response) {
                     res.status(200).json({
                         message: "Successfully Incremented Points",
