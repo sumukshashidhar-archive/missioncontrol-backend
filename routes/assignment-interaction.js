@@ -79,7 +79,7 @@ module.exports = (app) => {
         );
 
         if (
-            authenticated !== false &&
+            authenticated !== false
         ) {
             const resp = await asms.requestExtension(
                 authenticated["username"],
