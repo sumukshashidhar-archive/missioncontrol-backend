@@ -40,7 +40,6 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             assignment.find(
                 {class_assigned: student_class, section: student_section, open: true},
-                {_id: 1, assignment_data: 1},
                 async (err, obj) => {
                     if (err) {
                         logger.error(err);
