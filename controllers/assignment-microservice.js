@@ -119,6 +119,7 @@ module.exports = {
                         student.findOne({emailID: student_id}, async (err2, obj2) => {
                                 if (err2) {
                                     logger.error(err2);
+                                    resolve(false)
                                 } else {
                                     if (obj2!==null) {
                                         // at this point, we have found the student as well
@@ -134,6 +135,7 @@ module.exports = {
                                             else {
                                                 logger.info("Not enough points")
                                                 resolve(false)
+                                                return
                                             }
                                         }
                                         else if (duration == 2) {
@@ -145,6 +147,7 @@ module.exports = {
                                             else {
                                                 logger.info("Not enough points")
                                                 resolve(false)
+                                                return
                                             }
                                         }
                                         else {
@@ -160,7 +163,7 @@ module.exports = {
                                             student_email:obj2.emailID,
                                             newDueDate:date
                                         })
-                                        assignment.updateOne({_id: assingment_id}, {student_based_data: obj["student_based_data"]}, async function(err4, obj4) {
+                                        assignment.updateOne({_id: assignment_id}, {student_based_data: obj["student_based_data"]}, async function(err4, obj4) {
                                             if (err4) {
                                                 logger.error(err4)
                                             }
