@@ -7,11 +7,13 @@ module.exports = (app) => {
         // this route, if the teacher is authenticated, gets all the students for the particular class
         // first, we check if the teacher is authorized to access this route this way
         logger.debug("Called GetStudents route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
-        console.log(authenticated);
+        logger.debug(`We are now: ${authenticated}`)
         if (authenticated !== false) {
+            logger.debug("We are now authorized to access the getStudents Function")
             // now this means that our user is authorized to access this function
             // let us get her the students of her class!
             const studs = await getStudents.getStudents(
@@ -33,15 +35,16 @@ module.exports = (app) => {
     app.post("/api/interaction/addPoints", async (req, res) => {
         // this route is used to add points to students
         const authenticated = await auth.authoriseTeacher(req.headers.authorization);
-        console.log("header: ", req.headers.authorization)
-        console.log("authenticated or not:", authenticated)
+        logger.debug("header: ", req.headers.authorization)
+        logger.debug(`student_id, ${req.body.student_id}`)
+        logger.debug(`authenticated or not:, ${authenticated}`)
         if (authenticated !== false) {
             // it means that we are authenticated successfully
             // we need to have the student's email id sent to us, to process this request, quite simply
             if (
                 req.body.student_id !== null &&
                 req.body.student_id !== "" &&
-                req.body.student_id
+                req.body.student_id !== undefined
             ) {
                 console.log(req.body.student_id);
                 // now that means we have the student id defined as well, and that we can just increase points
