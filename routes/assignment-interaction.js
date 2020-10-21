@@ -40,9 +40,9 @@ module.exports = (app) => {
     */
     app.post("/api/student/assignment/submitAssignment", async (req, res) => {
         logger.info("Called Submit Assignment route")
-        logger.debug("header: ", req.headers.authorization)
-        logger.debug("assignment link: ", req.body.assignmentLink)
-        logger.debug("assignment ID: ", req.body.assignmentID)
+        logger.debug(`header: , ${req.headers.authorization}`)
+        logger.debug(`assignment link: , ${req.body.assignmentLink}`)
+        logger.debug(`assignment ID: ", ${req.body.assignmentID}`)
 
 
         const authenticated = await auth.authoriseStudent(
