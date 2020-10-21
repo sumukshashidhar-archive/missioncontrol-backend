@@ -53,7 +53,21 @@ module.exports = {
     },
 
     getAssignmentsTeacher: async (teacher_class, teacher_section) => {
-        
+        return new Promise(async function (resolve, reject) {
+            assignment.find({
+                "assignment_data.class_assigned": teacher_class,
+                "assignment_data.section": teacher_section
+            }, async function (err, obj) {
+                if (err) {
+                    logger.error(err)
+                    resolve(false)
+                } else {
+                    logger.debug(`Successfully got: ${obj}`)
+                    // as of here, we retrieve all the objects from the DB. we need to send this data to the frontend is all.
+                    resolve(obj)
+                }
+            })
+        })
     },
 
     requestExtension: async (student_id, assingment_id, duration) => {

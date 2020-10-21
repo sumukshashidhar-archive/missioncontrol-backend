@@ -102,6 +102,8 @@ module.exports = (app) => {
     });
 
     app.get("/api/assignments/teacher/getAssignments", async (req, res) => {
+        logger.info("Called Teacher Get Assignments route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
@@ -128,6 +130,8 @@ module.exports = (app) => {
     });
 
     app.post("/api/assignments/teacher/makeAssignment", async (req, res) => {
+        logger.info("Called Teacher make assignment route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
@@ -138,12 +142,16 @@ module.exports = (app) => {
             authenticated !== false
         ) {
             //means we are authorized by this point, so
+            console.debug("Authenticated")
+            logger.debug(`Type of date is is ${typeof req.body.dueDate}`)
+            const date_convert = parseInt(req.body.dueDate, Number)
+            logger.debug(`Type of date is ${typeof date_convert}`)
             const response = await asms.makeAssignment(
                 authenticated["grade"],
                 authenticated["section"],
                 authenticated["username"],
                 authenticated["name"],
-                1603814323,
+                date_convert,
                 req.body.assignmentName,
                 req.body.assignmentLink
             );
