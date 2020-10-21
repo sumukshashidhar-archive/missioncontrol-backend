@@ -124,7 +124,7 @@ module.exports = {
                                         // at this point, we have found the student as well
                                         // we need to check if the points are enough for the duration
                                         var date = obj.assignment_data.dueDate;
-                                        if (duration === 1) {
+                                        if (duration == 1) {
                                             if (obj2.totalInteractionPoints > 50) {
                                                 //success, they have enough points
                                                 // now add them to the list, and deduct the points
@@ -136,7 +136,7 @@ module.exports = {
                                                 resolve(false)
                                             }
                                         }
-                                        else if (duration === 2) {
+                                        else if (duration == 2) {
                                             if (obj2.totalInteractionPoints > 150) {
                                                 date = date + 172800
                                                 obj2.totalInteractionPoints = obj2.totalInteractionPoints - 150
