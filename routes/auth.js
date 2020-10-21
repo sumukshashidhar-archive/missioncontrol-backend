@@ -31,7 +31,7 @@ module.exports = (app) => {
     }),
         app.post("/register", async function (req, res) {
             logger.debug(`The username is ${req.body.username} password is ${req.body.password} name is ${req.body.name} class is ${req.body.grade} section is ${req.body.section}`)
-            const response = await registration_microservice.register_user(req.body.username, req.body.password, req.body.role, req.body.name, req,body.grade, req.body.section)
+            const response = await registration_microservice.register_user(req.body.username, req.body.password, req.body.role, req.body.name, req.body.grade, req.body.section)
             if(response["status"]) {
                 logger.info("Created a user")
                 res.status(200).json({
