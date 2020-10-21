@@ -146,6 +146,7 @@ module.exports = (app) => {
             logger.debug(`Type of date is is ${typeof req.body.dueDate}`)
             const date_convert = parseInt(req.body.dueDate, Number)
             logger.debug(`Type of date is ${typeof date_convert}`)
+            logger.debug(date_convert)
             const response = await asms.makeAssignment(
                 authenticated["grade"],
                 authenticated["section"],

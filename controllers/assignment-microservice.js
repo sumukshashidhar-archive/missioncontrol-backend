@@ -22,10 +22,11 @@ module.exports = {
                     dueDate: dueDate,
                     assignmentName: assignmentName,
                     assignmentLink: assignmentLink,
-                },
+                }
             });
             newAssignment.save((err, obj) => {
                 if (err) {
+                    logger.error(err)
                     resolve(false);
                 } else {
                     resolve(true);
