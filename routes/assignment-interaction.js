@@ -41,11 +41,16 @@ module.exports = (app) => {
     app.post("/api/student/assignment/submitAssignment", async (req, res) => {
         logger.info("Called Submit Assignment route")
         logger.debug("header: ", req.headers.authorization)
+        logger.debug("assignment link: ", req.body.assignmentLink)
+        logger.debug("assignment ID: ", req.body.assignmentID)
+
+
         const authenticated = await auth.authoriseStudent(
             req.headers.authorization
         );
 
         if (authenticated !== false) {
+            logger.debug("Authenticated as ", authenticated["username"])
             const resp = await asms.uploadAssignemnt(
                 req.body.assignmentLink,
                 authenticated["username"],
@@ -175,6 +180,8 @@ module.exports = (app) => {
     });
 
     app.post("/api/assignment/teacher/uploadCorrection", async (req, res) => {
+        logger.info("Called Teacher upload correction route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );

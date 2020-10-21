@@ -1,6 +1,23 @@
 const assignment = require("./../models/assingment");
 const student = require("./../models/student");
 const logger = require("./../config/logger")
+
+async function getStudentName(studentID) {
+    return new Promise(async function(resolve, reject) {
+        student.findOne({emailID: studentID}, {student_name: 1}, async function(err, obj) {
+            if (err) {
+                logger.error(err)
+                resolve(null)
+            }
+            else {
+                logger.debug(`Successfully got: ${obj} for the student name finder function`)
+                resolve(obj.student_name)
+            }
+        })
+    })
+}
+
+
 module.exports = {
     makeAssignment: async (
         class_assigned,
@@ -215,66 +232,53 @@ module.exports = {
         });
     },
 
-    uploadAssignemnt: async (assignmentLinker, studentID, assignment_id) => {
+    uploadAssignemnt: async (assignmentLinker, studentEmailID, assignment_id) => {
         return new Promise(async (resolve, reject) => {
             // for students to upload their assignments.
             // step 1: check if the assignment has already been uploaded
-            assignment.findById(
-                {_id: assignment_id, open: true},
-                {
-                    submittedStudents: 1,
-                    submittedStudentsLink: 1,
-                    correctionLink: 1,
-                    remarks: 1,
-                },
-                async (err, obj) => {
+            assignment.findById({_id: assignment_id, open: true}, async (err, obj) => {
                     if (err) {
-                        console.error(err);
+                        logger.error(err);
                         resolve(false);
                     } else {
-                        console.debug(obj);
-                        for (let i = 0; i < obj["submittedStudents"].length; i++) {
-                            if (obj["submittedStudents"][i] === studentID) {
-                                // means that the student has already submitted, and wants to resubmit. we'll allow it
-                                obj["submittedStudentsLink"][i] = {
+                        logger.debug(obj);
+                        if(obj !== null) {
+                            var modified = false;
+                            for (let i = 0; i < obj["student_based_data"]["submittedStudents"].length; i++) {
+                                if (obj["student_based_data"]["submittedStudents"][i]["studentEmail"] === studentEmailID) {
+                                    // means that the student has already submitted, and wants to resubmit. we'll allow it
+                                    obj["student_based_data"]["submittedStudents"][i] = {
+                                        studentEmail: studentEmailID,
+                                        studentName: await getStudentName(studentEmailID),
+                                        link: assignmentLinker,
+                                        time: new Date().getTime()
+                                    };
+                                    logger.debug("Student has already submitted. Fixing it")
+                                    modified = true
+                                }
+                            }
+                            if (modified) {
+                                // nothing here
+                            }
+                            else {
+                                obj["student_based_data"]["submittedStudents"].push({
+                                    studentEmail: studentEmailID,
+                                    studentName: await getStudentName(studentEmailID),
                                     link: assignmentLinker,
-                                    time: new Date().getTime(),
-                                };
-                                assignment.updateOne(
-                                    {_id: assignment_id},
-                                    {submittedStudentsLink: obj["submittedStudentsLink"]},
-                                    async (err2, obj2) => {
-                                        if (err2) {
-                                            console.error(err);
-                                        } else {
-                                            //successfully updated
-                                            resolve(true);
-
-                                        }
-                                    }
-                                );
+                                    time: new Date().getTime()
+                                });
                             }
                         }
-                        // if it reaches here, it means that it ran through the entire thing, and did not find it
-                        obj["submittedStudents"].push(studentID);
-                        obj["submittedStudentsLink"].push({
-                            link: assignmentLinker,
-                            time: new Date().getTime(),
-                        });
-                        obj["correctionLink"].push(null);
-                        obj["remarks"].push(null);
                         assignment.updateOne(
                             {_id: assignment_id},
                             {
-                                submittedStudentsLink: obj["submittedStudentsLink"],
-                                submittedStudents: obj["submittedStudents"],
-                                remarks: obj["remarks"],
-                                correctionLink: obj["correctionLink"],
+                                "student_based_data.SubmittedStudents":obj["student_based_data"]["submittedStudents"]
                             },
                             async (err3, obj3) => {
                                 if (err3) {
                                     console.error(err);
                                 } else {
+                                    logger.debug(obj3)
                                     //successfully updated
                                     resolve(true);
 

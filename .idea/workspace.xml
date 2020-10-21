@@ -22,6 +22,9 @@
     <list default="true" id="ab689df0-e6fb-474b-9c68-b4bd0974696c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/assignment-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/assignment-microservice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/points_control-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/points_control-microservice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/student.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/student.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/assignment-interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/assignment-interaction.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +65,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603217337559</updated>
       <workItem from="1603217339998" duration="4771000" />
-      <workItem from="1603253968638" duration="6733000" />
+      <workItem from="1603253968638" duration="9924000" />
     </task>
     <servers />
   </component>
@@ -90,5 +93,9 @@
       <screen x="0" y="23" width="1920" height="1013" />
     </state>
     <state x="625" y="245" key="run.anything.popup/0.23.1920.1013@0.23.1920.1013" timestamp="1603257257171" />
+    <state x="625" y="247" width="670" height="676" key="search.everywhere.popup" timestamp="1603262147948">
+      <screen x="0" y="23" width="1920" height="1013" />
+    </state>
+    <state x="625" y="247" width="670" height="676" key="search.everywhere.popup/0.23.1920.1013@0.23.1920.1013" timestamp="1603262147948" />
   </component>
 </project>
