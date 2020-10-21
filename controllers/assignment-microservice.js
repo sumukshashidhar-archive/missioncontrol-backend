@@ -12,14 +12,17 @@ module.exports = {
         assignmentLink
     ) => {
         return new Promise(async (resolve, reject) => {
+            logger.debug("called the make Assignments internal function")
             const newAssignment = new assignment({
-                class_assigned: class_assigned,
-                section: section,
-                teacher_assigned_by: teacher_assigned,
-                teacher_name: teacher_name,
-                dueDate: dueDate,
-                assignmentName: assignmentName,
-                assignmentLink: assignmentLink,
+                assignment_data: {
+                    class_assigned: class_assigned,
+                    section: section,
+                    teacher_assigned_by: teacher_assigned,
+                    teacher_name: teacher_name,
+                    dueDate: dueDate,
+                    assignmentName: assignmentName,
+                    assignmentLink: assignmentLink,
+                },
             });
             newAssignment.save((err, obj) => {
                 if (err) {
@@ -35,7 +38,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             assignment.find(
                 {class_assigned: student_class, section: student_section, open: true},
-                {_id: 1, assignmentName: 1, assignmentLink: 1, dueDate: 1},
+                {_id: 1, assignment_data: 1},
                 async (err, obj) => {
                     if (err) {
                         logger.error(err);

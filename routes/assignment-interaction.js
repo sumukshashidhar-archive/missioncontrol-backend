@@ -8,7 +8,7 @@ module.exports = (app) => {
     */
 
     app.get("/api/student/assignment/getAssignments", async (req, res) => {
-        logger.debug("Called GetAssignments route")
+        logger.info("Called GetAssignments route")
         logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseStudent(
             req.headers.authorization
@@ -38,7 +38,9 @@ module.exports = (app) => {
     /*
     Allows a student to submit a particular assignment
     */
-    app.post("/api/assignment/student/submitAssignment", async (req, res) => {
+    app.post("/api/student/assignment/submitAssignment", async (req, res) => {
+        logger.info("Called Submit Assignment route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseStudent(
             req.headers.authorization
         );
