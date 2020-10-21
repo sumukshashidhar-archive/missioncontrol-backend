@@ -1,6 +1,7 @@
 const auth = require("../controllers/authorization-microservice");
 const asms = require("./../controllers/assignment-microservice");
 const ptms = require("./../controllers/points_control-microservice");
+const logger = require("./../config/logger")
 module.exports = (app) => {
     /*
     Gets all the assignments due for the given student.
@@ -19,6 +20,7 @@ module.exports = (app) => {
                 authenticated["section"]
             );
             if (resp !== false) {
+                logger.debug(resp)
                 res.status(200).json({
                     object: resp,
                 });
