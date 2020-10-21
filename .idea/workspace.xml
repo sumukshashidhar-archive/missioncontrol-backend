@@ -22,6 +22,7 @@
     <list default="true" id="ab689df0-e6fb-474b-9c68-b4bd0974696c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controllers/registration-microservice.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/registration-microservice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +63,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603217337559</updated>
       <workItem from="1603217339998" duration="4771000" />
-      <workItem from="1603253968638" duration="691000" />
+      <workItem from="1603253968638" duration="1878000" />
     </task>
     <servers />
   </component>
@@ -82,9 +83,9 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="468" y="168" key="SettingsEditor" timestamp="1603254659142">
+    <state x="468" y="168" key="SettingsEditor" timestamp="1603255462795">
       <screen x="0" y="23" width="1920" height="1013" />
     </state>
-    <state x="468" y="168" key="SettingsEditor/0.23.1920.1013@0.23.1920.1013" timestamp="1603254659142" />
+    <state x="468" y="168" key="SettingsEditor/0.23.1920.1013@0.23.1920.1013" timestamp="1603255462795" />
   </component>
 </project>
