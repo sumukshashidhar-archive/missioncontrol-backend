@@ -4,7 +4,7 @@ const logger = require("./../config/logger")
 
 async function getStudentName(studentID) {
     return new Promise(async function (resolve, reject) {
-        student.findOne({emailID: studentID}, {student_name: 1}, async function (err, obj) {
+        student.findOne({ emailID: studentID }, { student_name: 1 }, async function (err, obj) {
             if (err) {
                 logger.error(err)
                 resolve(null)
@@ -95,7 +95,7 @@ module.exports = {
         logger.debug(`Got Request for Extension: ${student_id}, ${assignment_id}, ${duration}`)
         return new Promise(async (resolve, reject) => {
             // first find the assignment, and check whether the student has already requested an extension
-            assignment.findById({_id: assignment_id}, async function (err, obj) {
+            assignment.findById({ _id: assignment_id }, async function (err, obj) {
                 if (err) {
                     logger.error(err)
                     resolve({
@@ -116,84 +116,84 @@ module.exports = {
                         }
                         // if we reach here, we did not find them in the list of students, so let us check if they
                         // have enough points first.
-                        student.findOne({emailID: student_id}, async (err2, obj2) => {
-                                if (err2) {
-                                    logger.error(err2);
-                                    resolve(false)
-                                } else {
-                                    if (obj2!==null) {
-                                        // at this point, we have found the student as well
-                                        // we need to check if the points are enough for the duration
-                                        var date = obj.assignment_data.dueDate;
-                                        if (duration == 1) {
-                                            if (obj2.totalInteractionPoints > 50) {
-                                                //success, they have enough points
-                                                // now add them to the list, and deduct the points
-                                                date = date + 86400
-                                                obj2.totalInteractionPoints = obj2.totalInteractionPoints - 50
-                                            }
-                                            else {
-                                                logger.info("Not enough points")
-                                                resolve(false)
-                                                return
-                                            }
-                                        }
-                                        else if (duration == 2) {
-                                            if (obj2.totalInteractionPoints > 150) {
-                                                date = date + 172800
-                                                obj2.totalInteractionPoints = obj2.totalInteractionPoints - 150
-                                                // success, they have enough points
-                                            }
-                                            else {
-                                                logger.info("Not enough points")
-                                                resolve(false)
-                                                return
-                                            }
+                        student.findOne({ emailID: student_id }, async (err2, obj2) => {
+                            if (err2) {
+                                logger.error(err2);
+                                resolve(false)
+                            } else {
+                                if (obj2 !== null) {
+                                    // at this point, we have found the student as well
+                                    // we need to check if the points are enough for the duration
+                                    var date = obj.assignment_data.dueDate;
+                                    if (duration == 1) {
+                                        if (obj2.totalInteractionPoints > 50) {
+                                            //success, they have enough points
+                                            // now add them to the list, and deduct the points
+                                            date = date + 86400
+                                            obj2.totalInteractionPoints = obj2.totalInteractionPoints - 50
                                         }
                                         else {
-                                            logger.debug("Wrong duration")
+                                            logger.info("Not enough points")
                                             resolve(false)
                                             return
                                         }
-
-                                        // now add them to the list, points are already deducted.
-                                        // update both
-                                        obj.student_based_data.extensionPurchasedBy.push({
-                                            student_name: obj2.student_name,
-                                            student_email:obj2.emailID,
-                                            newDueDate:date
-                                        })
-                                        assignment.updateOne({_id: assignment_id}, {student_based_data: obj["student_based_data"]}, async function(err4, obj4) {
-                                            if (err4) {
-                                                logger.error(err4)
-                                            }
-                                            else {
-                                                logger.debug(`Successfully got: ${obj4}`)
-                                                logger.info("Updated the assignment with extension")
-                                            }
-                                        })
-
-                                        // now update students
-
-                                        student.updateOne({emailID: student_id}, {totalInteractionPoints: obj.totalInteractionPoints}, async function(err5, obj5) {
-                                            if (err5) {
-                                                logger.error(err5)
-                                            }
-                                            else {
-                                                logger.debug(`Successfully got: ${obj5}`)
-                                                logger.info("Also updated student interaction points")
-                                                resolve(true)
-                                                return
-                                            }
-                                        })
+                                    }
+                                    else if (duration == 2) {
+                                        if (obj2.totalInteractionPoints > 150) {
+                                            date = date + 172800
+                                            obj2.totalInteractionPoints = obj2.totalInteractionPoints - 150
+                                            // success, they have enough points
+                                        }
+                                        else {
+                                            logger.info("Not enough points")
+                                            resolve(false)
+                                            return
+                                        }
                                     }
                                     else {
-                                        logger.debug("Did not find the student")
+                                        logger.debug("Wrong duration")
                                         resolve(false)
                                         return
                                     }
+
+                                    // now add them to the list, points are already deducted.
+                                    // update both
+                                    obj.student_based_data.extensionPurchasedBy.push({
+                                        student_name: obj2.student_name,
+                                        student_email: obj2.emailID,
+                                        newDueDate: date
+                                    })
+                                    assignment.updateOne({ _id: assignment_id }, { student_based_data: obj["student_based_data"] }, async function (err4, obj4) {
+                                        if (err4) {
+                                            logger.error(err4)
+                                        }
+                                        else {
+                                            logger.debug(`Successfully got: ${obj4}`)
+                                            logger.info("Updated the assignment with extension")
+                                        }
+                                    })
+
+                                    // now update students
+
+                                    student.updateOne({ emailID: student_id }, { totalInteractionPoints: obj.totalInteractionPoints }, async function (err5, obj5) {
+                                        if (err5) {
+                                            logger.error(err5)
+                                        }
+                                        else {
+                                            logger.debug(`Successfully got: ${obj5}`)
+                                            logger.info("Also updated student interaction points")
+                                            resolve(true)
+                                            return
+                                        }
+                                    })
+                                }
+                                else {
+                                    logger.debug("Did not find the student")
+                                    resolve(false)
+                                    return
                                 }
                             }
+                        }
                         );
                     } else {
                         resolve({
@@ -209,12 +209,13 @@ module.exports = {
     uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => {
         logger.debug(`Reached correction upload with ${correctionLink}, ${studentID}, ${assignment_id}, ${remarks}`)
         return new Promise(async (resolve, reject) => {
-            assignment.findById({_id: assignment_id}, async (err, obj) => {
+            assignment.findById({ _id: assignment_id }, async (err, obj) => {
                 if (err) {
                     logger.error(err);
                     resolve(false);
 
                 } else {
+                    logger.debug(`Found ${JSON.stringify(obj)}`)
                     for (let i = 0; i < obj.student_based_data.submittedStudents.length; i++) {
                         if (obj.student_based_data.submittedStudents[i].studentID === studentID) {
                             // means that we found the appropriate student.
@@ -225,7 +226,7 @@ module.exports = {
                                 link: obj.student_based_data.submittedStudents[i].link,
                                 correctionLink: correctionLink,
                             }
-                            assignment.updateOne({_id: assignment_id}, {student_based_data: obj["student_based_data"]}, async function (err2, obj2) {
+                            assignment.updateOne({ _id: assignment_id }, { student_based_data: obj["student_based_data"] }, async function (err2, obj2) {
                                 if (err2) {
                                     logger.error(err)
                                     resolve(false)
@@ -246,58 +247,58 @@ module.exports = {
             logger.debug("Reached the uploadAssignment Function inside")
             // for students to upload their assignments.
             // step 1: check if the assignment has already been uploaded
-            assignment.findById({_id: assignment_id, open: true}, async (err, obj) => {
-                    if (err) {
-                        logger.error(err);
-                        resolve(false);
-                    } else {
-                        logger.debug(`Original Object: ${JSON.stringify(obj)}`);
-                        if (obj !== null) {
-                            var modified = false;
-                            for (let i = 0; i < obj["student_based_data"]["submittedStudents"].length; i++) {
-                                if (obj["student_based_data"]["submittedStudents"][i]["studentEmail"] === studentEmailID) {
-                                    // means that the student has already submitted, and wants to resubmit. we'll allow it
-                                    obj["student_based_data"]["submittedStudents"][i] = {
-                                        studentEmail: studentEmailID,
-                                        studentName: await getStudentName(studentEmailID),
-                                        link: assignmentLinker,
-                                        time: new Date().getTime()
-                                    };
-                                    logger.debug("Student has already submitted. Fixing it")
-                                    modified = true
-                                }
-                            }
-                            if (modified) {
-                                // nothing here
-                            } else {
-                                logger.debug("New Submission")
-                                obj["student_based_data"]["submittedStudents"].push({
+            assignment.findById({ _id: assignment_id, open: true }, async (err, obj) => {
+                if (err) {
+                    logger.error(err);
+                    resolve(false);
+                } else {
+                    logger.debug(`Original Object: ${JSON.stringify(obj)}`);
+                    if (obj !== null) {
+                        var modified = false;
+                        for (let i = 0; i < obj["student_based_data"]["submittedStudents"].length; i++) {
+                            if (obj["student_based_data"]["submittedStudents"][i]["studentEmail"] === studentEmailID) {
+                                // means that the student has already submitted, and wants to resubmit. we'll allow it
+                                obj["student_based_data"]["submittedStudents"][i] = {
                                     studentEmail: studentEmailID,
                                     studentName: await getStudentName(studentEmailID),
                                     link: assignmentLinker,
                                     time: new Date().getTime()
-                                });
+                                };
+                                logger.debug("Student has already submitted. Fixing it")
+                                modified = true
                             }
                         }
-                        logger.debug(`Changed Object: ${JSON.stringify(obj)}`);
-                        assignment.updateOne(
-                            {_id: assignment_id},
-                            {
-                                student_based_data: obj["student_based_data"]
-                            },
-                            async (err3, obj3) => {
-                                if (err3) {
-                                    logger.error(err);
-                                } else {
-                                    logger.debug(JSON.stringify(obj3))
-                                    //successfully updated
-                                    resolve(true);
-
-                                }
-                            }
-                        );
+                        if (modified) {
+                            // nothing here
+                        } else {
+                            logger.debug("New Submission")
+                            obj["student_based_data"]["submittedStudents"].push({
+                                studentEmail: studentEmailID,
+                                studentName: await getStudentName(studentEmailID),
+                                link: assignmentLinker,
+                                time: new Date().getTime()
+                            });
+                        }
                     }
+                    logger.debug(`Changed Object: ${JSON.stringify(obj)}`);
+                    assignment.updateOne(
+                        { _id: assignment_id },
+                        {
+                            student_based_data: obj["student_based_data"]
+                        },
+                        async (err3, obj3) => {
+                            if (err3) {
+                                logger.error(err);
+                            } else {
+                                logger.debug(JSON.stringify(obj3))
+                                //successfully updated
+                                resolve(true);
+
+                            }
+                        }
+                    );
                 }
+            }
             );
         });
     },
