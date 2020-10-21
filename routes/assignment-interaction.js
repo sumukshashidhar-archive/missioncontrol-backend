@@ -181,6 +181,7 @@ module.exports = (app) => {
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
+        logger.debug(`Auth is ${authenticated}`)
         if (authenticated !== false) {
             const resp = await asms.uploadCorrection(
                 req.body.correctionLink,
@@ -189,10 +190,12 @@ module.exports = (app) => {
                 req.body.remarks
             );
             if (resp) {
+                logger.debug(`Sending out network request with 200`)
                 res.status(200).json({
                     message: "Uploaded Correction Successfully",
                 });
             } else {
+                logger.debug(`Network request failed. 500 being sent out`)
                 res.status(500).json({
                     message: "Something went wrong",
                 });
@@ -212,7 +215,7 @@ module.exports = (app) => {
         if (authenticated !== false) {
             const resp = await ptms.sendPoints(authenticated["username"]);
             if (resp) {
-                res.status(200).json({points: resp["totalInteractionPoints"]});
+                res.status(200).json({ points: resp["totalInteractionPoints"] });
             } else {
                 res.status(500).send("No");
             }
