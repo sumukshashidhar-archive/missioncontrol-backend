@@ -62,7 +62,7 @@
       <option name="presentableId" value="Default" />
       <updated>1603217337559</updated>
       <workItem from="1603217339998" duration="4771000" />
-      <workItem from="1603253968638" duration="146000" />
+      <workItem from="1603253968638" duration="691000" />
     </task>
     <servers />
   </component>
@@ -82,9 +82,9 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="468" y="168" key="SettingsEditor" timestamp="1603221324363">
+    <state x="468" y="168" key="SettingsEditor" timestamp="1603254659142">
       <screen x="0" y="23" width="1920" height="1013" />
     </state>
-    <state x="468" y="168" key="SettingsEditor/0.23.1920.1013@0.23.1920.1013" timestamp="1603221324363" />
+    <state x="468" y="168" key="SettingsEditor/0.23.1920.1013@0.23.1920.1013" timestamp="1603254659142" />
   </component>
 </project>
