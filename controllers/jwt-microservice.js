@@ -12,6 +12,9 @@ const privateKEY = fs.readFileSync(privateKeyPath, "utf-8");
 // options
 const jENV = require("./../config/tokenOptions");
 
+
+const logger = require("./../config/logger")
+
 async function extractor(headerfile) {
   return new Promise(async (resolve, reject) => {
     if (headerfile !== undefined) {
@@ -35,10 +38,10 @@ async function verifier(token) {
       decodedToken
     ) {
       if (err) {
-        console.log(err);
+        logger.error(err);
         resolve(false);
       } else {
-        console.log(decodedToken);
+        logger.info(decodedToken);
         resolve(decodedToken);
       }
     });
@@ -53,6 +56,7 @@ module.exports = {
         decodedToken
       ) {
         if (err) {
+          logger.error(err)
           resolve(false);
         } else {
           resolve(decodedToken);
@@ -79,7 +83,7 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       const stringer = headerfile;
       if (stringer.startsWith("Bearer ")) {
-        console.log(stringer);
+        logger.debug(stringer);
         var token = stringer.substring(8);
         resolve(token);
       } else {
@@ -98,11 +102,11 @@ module.exports = {
         if (decodedToken !== false) {
           resolve(decodedToken);
         } else {
-          console.log("Extraction OK, but decoding failed");
+          logger.info ("Extraction OK, but decoding failed");
           resolve(false);
         }
       } else {
-        console.log("extraction failed");
+        logger.info("extraction failed");
         resolve(false);
       }
     });

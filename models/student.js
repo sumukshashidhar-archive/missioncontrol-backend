@@ -6,6 +6,11 @@ const studentSchema = new mongoose.Schema({
     student_class: Number,
     student_section: String,
     totalInteractionPoints: {type: Number, default: 0},
+    InteractionData: {
+        interactionArray: {type: Array, default: [0]},
+        rawPoints: {type: Number, default: 0},
+        multiplier: {type: Boolean, default: false}
+    }
 });
 
 module.exports = mongoose.model("student", studentSchema);

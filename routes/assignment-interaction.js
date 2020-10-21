@@ -1,12 +1,15 @@
 const auth = require("../controllers/authorization-microservice");
 const asms = require("./../controllers/assignment-microservice");
 const ptms = require("./../controllers/points_control-microservice");
+const logger = require("./../config/logger")
 module.exports = (app) => {
     /*
     Gets all the assignments due for the given student.
     */
 
     app.get("/api/student/assignment/getAssignments", async (req, res) => {
+        logger.info("Called GetAssignments route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseStudent(
             req.headers.authorization
         );
@@ -17,6 +20,7 @@ module.exports = (app) => {
                 authenticated["section"]
             );
             if (resp !== false) {
+                logger.debug(resp)
                 res.status(200).json({
                     object: resp,
                 });
@@ -34,12 +38,19 @@ module.exports = (app) => {
     /*
     Allows a student to submit a particular assignment
     */
-    app.post("/api/assignment/student/submitAssignment", async (req, res) => {
+    app.post("/api/student/assignment/submitAssignment", async (req, res) => {
+        logger.info("Called Submit Assignment route")
+        logger.debug(`header: , ${req.headers.authorization}`)
+        logger.debug(`assignment link: , ${req.body.assignmentLink}`)
+        logger.debug(`assignment ID: ", ${req.body.assignmentID}`)
+
+
         const authenticated = await auth.authoriseStudent(
             req.headers.authorization
         );
 
         if (authenticated !== false) {
+            logger.debug("Authenticated as ", authenticated["username"])
             const resp = await asms.uploadAssignemnt(
                 req.body.assignmentLink,
                 authenticated["username"],
@@ -68,11 +79,7 @@ module.exports = (app) => {
         );
 
         if (
-            authenticated !== false &&
-            req.body.assignmentID !== null &&
-            req.body.assignmentID !== undefined &&
-            req.body.duration !== undefined &&
-            req.body.duration !== null
+            authenticated !== false
         ) {
             const resp = await asms.requestExtension(
                 authenticated["username"],
@@ -96,6 +103,8 @@ module.exports = (app) => {
     });
 
     app.get("/api/assignments/teacher/getAssignments", async (req, res) => {
+        logger.info("Called Teacher Get Assignments route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
@@ -122,6 +131,8 @@ module.exports = (app) => {
     });
 
     app.post("/api/assignments/teacher/makeAssignment", async (req, res) => {
+        logger.info("Called Teacher make assignment route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
@@ -132,12 +143,17 @@ module.exports = (app) => {
             authenticated !== false
         ) {
             //means we are authorized by this point, so
+            console.debug("Authenticated")
+            logger.debug(`Type of date is is ${typeof req.body.dueDate}`)
+            const date_convert = parseInt(req.body.dueDate, Number)
+            logger.debug(`Type of date is ${typeof date_convert}`)
+            logger.debug(date_convert)
             const response = await asms.makeAssignment(
                 authenticated["grade"],
                 authenticated["section"],
                 authenticated["username"],
                 authenticated["name"],
-                1603814323,
+                date_convert,
                 req.body.assignmentName,
                 req.body.assignmentLink
             );
@@ -160,6 +176,8 @@ module.exports = (app) => {
     });
 
     app.post("/api/assignment/teacher/uploadCorrection", async (req, res) => {
+        logger.info("Called Teacher upload correction route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseTeacher(
             req.headers.authorization
         );
