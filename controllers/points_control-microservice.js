@@ -27,14 +27,13 @@ module.exports = {
                         logger.debug(obj);
                         obj.InteractionData.interactionArray.push(new Date().getTime())
                         obj.InteractionData.rawPoints = obj.InteractionData.rawPoints + 1;
+                        obj.InteractionData.multiplier = multiplier
                         logger.debug(obj);
                         student.updateOne(
                             {emailID: studentid},
                             {
                                 totalInteractionPoints: obj["totalInteractionPoints"],
-                                "InteractionData.rawPoints": obj.InteractionData.rawPoints,
-                                "InteractionData.interactionArray": obj.InteractionData.interactionArray,
-                                "InteractionData.multiplier": multiplier
+                                InteractionData: obj.InteractionData
                             },
                             async (err2, obj2) => {
                                 if (err2) {
