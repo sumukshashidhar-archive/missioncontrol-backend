@@ -7,6 +7,8 @@ module.exports = (app) => {
     */
 
     app.get("/api/student/assignment/getAssignments", async (req, res) => {
+        logger.debug("Called GetAssignments route")
+        logger.debug("header: ", req.headers.authorization)
         const authenticated = await auth.authoriseStudent(
             req.headers.authorization
         );

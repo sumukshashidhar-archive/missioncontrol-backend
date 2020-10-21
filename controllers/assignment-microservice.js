@@ -1,6 +1,6 @@
-const assingment = require("./../models/assingment");
 const assignment = require("./../models/assingment");
 const student = require("./../models/student");
+const logger = require("./../config/logger")
 module.exports = {
     makeAssignment: async (
         class_assigned,
@@ -38,9 +38,10 @@ module.exports = {
                 {_id: 1, assignmentName: 1, assignmentLink: 1, dueDate: 1},
                 async (err, obj) => {
                     if (err) {
-                        console.log(err);
+                        logger.error(err);
                         resolve(false);
                     } else {
+                        logger.debug("Student Assignments Object is ", obj)
                         resolve(obj);
                     }
                 }
