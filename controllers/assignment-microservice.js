@@ -217,7 +217,7 @@ module.exports = {
                 } else {
                     logger.debug(`Found ${JSON.stringify(obj)}`)
                     for (let i = 0; i < obj.student_based_data.submittedStudents.length; i++) {
-                        if (obj.student_based_data.submittedStudents[i].studentID === studentID) {
+                        if (obj.student_based_data.submittedStudents[i].studentEmail === studentID) {
                             // means that we found the appropriate student.
                             // we update the object
                             obj.student_based_data.submittedStudents[i] = {
