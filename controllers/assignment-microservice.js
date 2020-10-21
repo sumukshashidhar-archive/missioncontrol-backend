@@ -29,6 +29,7 @@ module.exports = {
                     logger.error(err)
                     resolve(false);
                 } else {
+                    logger.info(`made assignment ${obj}`)
                     resolve(true);
                 }
             });
