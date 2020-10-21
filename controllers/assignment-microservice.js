@@ -108,7 +108,7 @@ module.exports = {
                         // asked for an extension
                         for (let i = 0; i < obj.student_based_data.extensionPurchasedBy.length; i++) {
                             // we'll loop through and check if they have already purchased extension
-                            if (true) {
+                            if (obj.student_based_data.extensionPurchasedBy[i].student_email === student_id) {
                                 resolve(false)
                                 return
                             }
@@ -122,10 +122,13 @@ module.exports = {
                                     if (obj2!==null) {
                                         // at this point, we have found the student as well
                                         // we need to check if the points are enough for the duration
+                                        var date = obj.assignment_data.dueDate;
                                         if (duration === 1) {
                                             if (obj2.totalInteractionPoints > 50) {
                                                 //success, they have enough points
                                                 // now add them to the list, and deduct the points
+                                                date = date + 86400
+                                                obj2.totalInteractionPoints = obj2.totalInteractionPoints - 50
                                             }
                                             else {
                                                 logger.info("Not enough points")
@@ -134,14 +137,9 @@ module.exports = {
                                         }
                                         else if (duration === 2) {
                                             if (obj2.totalInteractionPoints > 150) {
-                                                var date = obj.assignment_data.dueDate + 172800
+                                                date = date + 172800
+                                                obj2.totalInteractionPoints = obj2.totalInteractionPoints - 150
                                                 // success, they have enough points
-                                                // now add them to the list, and deduct the points
-                                                obj.student_based_data.extensionPurchasedBy.push({
-                                                    student_name: obj2.student_name,
-                                                    student_email:obj2.emailID,
-                                                    newDueDate:
-                                                })
                                             }
                                             else {
                                                 logger.info("Not enough points")
@@ -151,7 +149,39 @@ module.exports = {
                                         else {
                                             logger.debug("Wrong duration")
                                             resolve(false)
+                                            return
                                         }
+
+                                        // now add them to the list, points are already deducted.
+                                        // update both
+                                        obj.student_based_data.extensionPurchasedBy.push({
+                                            student_name: obj2.student_name,
+                                            student_email:obj2.emailID,
+                                            newDueDate:date
+                                        })
+                                        assignment.updateOne({_id: assingment_id}, {student_based_data: obj["student_based_data"]}, async function(err4, obj4) {
+                                            if (err4) {
+                                                logger.error(err4)
+                                            }
+                                            else {
+                                                logger.debug(`Successfully got: ${obj4}`)
+                                                logger.info("Updated the assignment with extension")
+                                            }
+                                        })
+
+                                        // now update students
+
+                                        student.updateOne({emailID: student_id}, {totalInteractionPoints: obj.totalInteractionPoints}, async function(err5, obj5) {
+                                            if (err5) {
+                                                logger.error(err5)
+                                            }
+                                            else {
+                                                logger.debug(`Successfully got: ${obj5}`)
+                                                logger.info("Also updated student interaction points")
+                                                resolve(true)
+                                                return
+                                            }
+                                        })
                                     }
                                     else {
                                         logger.debug("Did not find the student")
