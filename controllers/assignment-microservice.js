@@ -92,6 +92,7 @@ module.exports = {
     },
 
     requestExtension: async (student_id, assignment_id, duration) => {
+        logger.debug(`Got Request for Extension: ${student_id}, ${assignment_id}, ${duration}`)
         return new Promise(async (resolve, reject) => {
             // first find the assignment, and check whether the student has already requested an extension
             assignment.findById({_id: assignment_id}, async function (err, obj) {
