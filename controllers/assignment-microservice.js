@@ -106,6 +106,41 @@ module.exports = {
                         logger.debug(`Successfully got: ${obj}`)
                         // at this point, we found the assignment, we need to still check if the student has already
                         // asked for an extension
+                        for (let i = 0; i < obj.student_based_data.extensionPurchasedBy.length; i++) {
+                            // we'll loop through and check if they have already purchased extension
+                            if (true) {
+                                resolve(false)
+                                return
+                            }
+                        }
+                        // if we reach here, we did not find them in the list of students, so let us check if they
+                        // have enough points first.
+                        student.findOne({emailID: student_id}, {totalInteractionPoints: 1}, async (err, obj) => {
+                                if (err) {
+                                    logger.error(err);
+                                } else {
+                                    if (obj!==null) {
+                                        // at this point, we have found the student as well
+                                        // we need to check if the points are enough for the duration
+                                        if (duration == 1) {
+        
+                                        }
+                                        else if (duration == 2) {
+
+                                        }
+                                        else {
+                                            logger.debug("Wrong duration")
+                                            resolve(false)
+                                        }
+                                    }
+                                    else {
+                                        logger.debug("Did not find the student")
+                                        resolve(false)
+                                        return
+                                    }
+                                }
+                            }
+                        );
                     } else {
                         resolve({
                             "status": false,
@@ -126,8 +161,8 @@ module.exports = {
                     resolve(false);
 
                 } else {
-                    for(let i=0; i<obj.student_based_data.submittedStudents.length; i++) {
-                        if(obj.student_based_data.submittedStudents[i].studentID === studentID){
+                    for (let i = 0; i < obj.student_based_data.submittedStudents.length; i++) {
+                        if (obj.student_based_data.submittedStudents[i].studentID === studentID) {
                             // means that we found the appropriate student.
                             // we update the object
                             obj.student_based_data.submittedStudents[i] = {
@@ -136,12 +171,11 @@ module.exports = {
                                 link: obj.student_based_data.submittedStudents[i].link,
                                 correctionLink: correctionLink,
                             }
-                            assignment.updateOne({_id: assignment_id}, {student_based_data: obj["student_based_data"]}, async function(err2, obj2) {
+                            assignment.updateOne({_id: assignment_id}, {student_based_data: obj["student_based_data"]}, async function (err2, obj2) {
                                 if (err2) {
                                     logger.error(err)
                                     resolve(false)
-                                }
-                                else {
+                                } else {
                                     logger.debug(`Successfully got: ${obj2}`)
                                     resolve(true)
                                 }
