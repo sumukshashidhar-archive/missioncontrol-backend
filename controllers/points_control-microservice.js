@@ -3,7 +3,7 @@ const logger = require("./../config/logger")
 module.exports = {
     addPoints: async (studentid) => {
         return new Promise(async (resolve, reject) => {
-            student.findOne({emailID: studentid}, async (err, obj) => {
+            student.findOne({ emailID: studentid }, async (err, obj) => {
                 if (err) {
                     logger.error(err);
                     resolve(false);
@@ -30,7 +30,7 @@ module.exports = {
                         obj.InteractionData.multiplier = multiplier
                         logger.debug(obj);
                         student.updateOne(
-                            {emailID: studentid},
+                            { emailID: studentid },
                             {
                                 totalInteractionPoints: obj["totalInteractionPoints"],
                                 InteractionData: obj.InteractionData
@@ -56,8 +56,8 @@ module.exports = {
     sendPoints: async (studentid) => {
         return new Promise(async (resolve, reject) => {
             student.findOne(
-                {emailID: studentid},
-                {totalInteractionPoints: 1},
+                { emailID: studentid },
+                { totalInteractionPoints: 1, InteractionData: 1 },
                 async (err, obj) => {
                     if (err) {
                         console.error(err);
