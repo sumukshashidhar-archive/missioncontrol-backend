@@ -3,13 +3,12 @@ const student = require("./../models/student");
 const logger = require("./../config/logger")
 
 async function getStudentName(studentID) {
-    return new Promise(async function(resolve, reject) {
-        student.findOne({emailID: studentID}, {student_name: 1}, async function(err, obj) {
+    return new Promise(async function (resolve, reject) {
+        student.findOne({emailID: studentID}, {student_name: 1}, async function (err, obj) {
             if (err) {
                 logger.error(err)
                 resolve(null)
-            }
-            else {
+            } else {
                 logger.debug(`Successfully got: ${obj} for the student name finder function`)
                 resolve(obj.student_name)
             }
@@ -99,20 +98,18 @@ module.exports = {
                 if (err) {
                     logger.error(err)
                     resolve({
-                        "status":false,
-                        "message":"mongo"
+                        "status": false,
+                        "message": "mongo"
                     })
-                }
-                else {
+                } else {
                     if (obj !== null) {
                         logger.debug(`Successfully got: ${obj}`)
                         // at this point, we found the assignment, we need to still check if the student has already
                         // asked for an extension
-                    }
-                    else {
+                    } else {
                         resolve({
-                            "status":false,
-                            "message":"did not find assignment"
+                            "status": false,
+                            "message": "did not find assignment"
                         })
                     }
                 }
@@ -120,12 +117,7 @@ module.exports = {
         });
     },
 
-    uploadCorrection: async (
-        correctionLink,
-        studentID,
-        assignment_id,
-        remarks
-    ) => {
+    uploadCorrection: async (correctionLink, studentID, assignment_id, remarks) => {
         return new Promise(async (resolve, reject) => {
             assingment.findById({_id: assignment_id}, async (err, obj) => {
                 if (err) {
@@ -177,7 +169,7 @@ module.exports = {
                         resolve(false);
                     } else {
                         logger.debug(`Original Object: ${JSON.stringify(obj)}`);
-                        if(obj !== null) {
+                        if (obj !== null) {
                             var modified = false;
                             for (let i = 0; i < obj["student_based_data"]["submittedStudents"].length; i++) {
                                 if (obj["student_based_data"]["submittedStudents"][i]["studentEmail"] === studentEmailID) {
@@ -194,8 +186,7 @@ module.exports = {
                             }
                             if (modified) {
                                 // nothing here
-                            }
-                            else {
+                            } else {
                                 logger.debug("New Submission")
                                 obj["student_based_data"]["submittedStudents"].push({
                                     studentEmail: studentEmailID,
@@ -209,7 +200,7 @@ module.exports = {
                         assignment.updateOne(
                             {_id: assignment_id},
                             {
-                                student_based_data:obj["student_based_data"]
+                                student_based_data: obj["student_based_data"]
                             },
                             async (err3, obj3) => {
                                 if (err3) {
