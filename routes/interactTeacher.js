@@ -30,7 +30,9 @@ module.exports = (app) => {
 
   app.post("/api/interaction/addPoints", async (req, res) => {
     // this route is used to add points to students
-    const authenticated = auth.authoriseTeacher(req.headers.authorization);
+    const authenticated = await auth.authoriseTeacher(req.headers.authorization);
+    console.log("header: ", req.headers.authorization)
+    console.log("authenticated or not:", authenticated)
     if (authenticated !== false) {
       // it means that we are authenticated successfully
       // we need to have the student's email id sent to us, to process this request, quite simply

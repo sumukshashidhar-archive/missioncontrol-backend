@@ -18,7 +18,6 @@ async function extractor(headerfile) {
       const stringer = headerfile;
       if (stringer.startsWith("Bearer ")) {
         var token = stringer.substring(8, stringer.length);
-        console.debug("token: ", token);
         resolve(token);
       } else {
         resolve(false);
@@ -82,7 +81,6 @@ module.exports = {
       if (stringer.startsWith("Bearer ")) {
         console.log(stringer);
         var token = stringer.substring(8);
-        console.debug("token: ", token);
         resolve(token);
       } else {
         resolve(false);
