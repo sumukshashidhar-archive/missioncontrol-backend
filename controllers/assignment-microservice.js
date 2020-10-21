@@ -115,18 +115,38 @@ module.exports = {
                         }
                         // if we reach here, we did not find them in the list of students, so let us check if they
                         // have enough points first.
-                        student.findOne({emailID: student_id}, {totalInteractionPoints: 1}, async (err, obj) => {
-                                if (err) {
-                                    logger.error(err);
+                        student.findOne({emailID: student_id}, async (err2, obj2) => {
+                                if (err2) {
+                                    logger.error(err2);
                                 } else {
-                                    if (obj!==null) {
+                                    if (obj2!==null) {
                                         // at this point, we have found the student as well
                                         // we need to check if the points are enough for the duration
-                                        if (duration == 1) {
-        
+                                        if (duration === 1) {
+                                            if (obj2.totalInteractionPoints > 50) {
+                                                //success, they have enough points
+                                                // now add them to the list, and deduct the points
+                                            }
+                                            else {
+                                                logger.info("Not enough points")
+                                                resolve(false)
+                                            }
                                         }
-                                        else if (duration == 2) {
-
+                                        else if (duration === 2) {
+                                            if (obj2.totalInteractionPoints > 150) {
+                                                var date = obj.assignment_data.dueDate + 172800
+                                                // success, they have enough points
+                                                // now add them to the list, and deduct the points
+                                                obj.student_based_data.extensionPurchasedBy.push({
+                                                    student_name: obj2.student_name,
+                                                    student_email:obj2.emailID,
+                                                    newDueDate:
+                                                })
+                                            }
+                                            else {
+                                                logger.info("Not enough points")
+                                                resolve(false)
+                                            }
                                         }
                                         else {
                                             logger.debug("Wrong duration")
